@@ -6,6 +6,11 @@
   
     "description": "Unofficial improvements to the UoA mediaplayer.",
 
+    "browser_specific_settings": {
+      "gecko": {
+        "update_url": "https://raw.githubusercontent.com/acoollevel/uoa-mediaplayer-plus/master/updates.json"
+      }
+    },
   
     "content_scripts": [
       {
