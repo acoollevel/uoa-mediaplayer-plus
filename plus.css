@@ -1,0 +1,31 @@
+:root {
+    --ion-padding: 0px!important; /* Remove padding around outside of video */
+    --ion-background-color: black!important;
+}
+
+#video-container {
+    /* Make video span entire window */
+    max-width: 100%!important;
+    max-height: 100%!important;
+}
+
+/* Hide massive centre playbutton */
+.shaka-play-button-container {
+    display: none!important;
+}
+
+.shaka-bottom-controls {
+    /* Move controls further down */
+    padding-bottom: 25px!important;
+}
+
+.shaka-skim-container {
+    transition: opacity linear 0s!important;
+    -webkit-transition: opacity linear 0s!important;
+}
+
+.shaka-settings-menu {
+    /* Move the settings dropdown up */
+    right: 45px!important;
+    bottom: 80px!important;
+}

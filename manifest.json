@@ -1,0 +1,18 @@
+{
+
+    "manifest_version": 2,
+    "name": "UoA MediaplayerPlus",
+    "version": "0.1",
+  
+    "description": "Unofficial improvements to the UoA mediaplayer.",
+
+  
+    "content_scripts": [
+      {
+        "matches": ["*://mediaplayer.auckland.ac.nz/*"],
+        "js": ["arrive.min.js", "plus.js"],
+        "css" : ["plus.css"]
+      }
+    ]
+  
+  }
