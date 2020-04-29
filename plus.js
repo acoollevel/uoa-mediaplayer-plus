@@ -3,20 +3,6 @@ var controls;
 var loaded = false;
 var intended_speed = 1;
 
-// helper functions, mostly copied from stackoverflow :)
-
-function insertAfter(newNode, referenceNode) {
-    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-}
-
-function createElementFromHTML(htmlString) {
-    var div = document.createElement('div');
-    div.innerHTML = htmlString.trim();
-  
-    // Change this to div.childNodes to support multiple top-level nodes
-    return div.firstChild; 
-}
-
 document.arrive(".shaka-volume-bar-container", function() {
     if (!loaded) {
         loaded = true;
@@ -31,13 +17,13 @@ document.arrive(".shaka-volume-bar-container", function() {
         controls = document.getElementsByClassName("shaka-controls-container")[0]
         vol_slider = document.getElementsByClassName("shaka-volume-bar-container")[0]
 
-        download_button = createElementFromHTML("<button class='material-icons' id='mpp-download' aria-label='Download' title='Download'>get_app</button>")
-        download_button.addEventListener('click', function() {
+        download_button = "<button class='material-icons' id='mpp-download' aria-label='Download' title='Download'>get_app</button>"
+        vol_slider.insertAdjacentHTML("afterend", download_button)
+        document.getElementById("mpp-download").addEventListener('click', function() {
             url_string = window.location.href;
             url_string = url_string.replace('.preview', '.mp4');
             window.open(url_string,'_blank');
         });
-        insertAfter(download_button, vol_slider);
 
         speed_changer = document.getElementsByClassName("shaka-playback-rates")[0]
         speed_changer.addEventListener('click', function() {
