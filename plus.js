@@ -19,6 +19,9 @@ document.arrive(".shaka-volume-bar-container", function() {
         controls = document.getElementsByClassName("shaka-controls-container")[0]
         vol_slider = document.getElementsByClassName("shaka-volume-bar-container")[0]
 
+        // skip copyright warning
+        vid.currentTime = 42;
+
         // download button
         download_button = "<button class='material-icons' id='mpp-download' aria-label='Download' title='Download'>get_app</button>"
         vol_slider.insertAdjacentHTML("afterend", download_button);
