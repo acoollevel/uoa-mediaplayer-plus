@@ -2,8 +2,6 @@
 
 Various improvements to the new UoA mediaplayer.
 
-[![Chrome Web Store Badge](https://github.com/acoollevel/uoa-mediaplayer-plus/raw/master/assets/chrome-web-store-badge.png "Get from the Chrome Web Store")](https://chrome.google.com/webstore/detail/uoa-mediaplayerplus/oohpedaigajmdamiaboobdjijopldlkd)
-
 ## Features
 - Download button for watching lectures offline
 - Keyboard shortcuts:
@@ -18,8 +16,12 @@ Various improvements to the new UoA mediaplayer.
 ### Chromium Browsers
 Available on the [Chrome Web Store](https://chrome.google.com/webstore/detail/uoa-mediaplayerplus/oohpedaigajmdamiaboobdjijopldlkd).
 
+[![Chrome Web Store Badge](https://github.com/acoollevel/uoa-mediaplayer-plus/raw/master/assets/chrome-web-store-badge.png "Get from the Chrome Web Store")](https://chrome.google.com/webstore/detail/uoa-mediaplayerplus/oohpedaigajmdamiaboobdjijopldlkd)
+
 ### Firefox
 Not available on AMO due to limited audience. You can get the .xpi file directly from [Github](https://github.com/acoollevel/uoa-mediaplayer-plus/releases/latest). Don't worry, it will still automatically update.
+
+[![Firefox Badge](https://github.com/acoollevel/uoa-mediaplayer-plus/raw/master/assets/firefox-badge.png "Download Firefox Addon")](https://github.com/acoollevel/uoa-mediaplayer-plus/releases/download/0.2/uoa_mediaplayerplus-0.2-fx.xpi)
 
 ## Bugs & Suggestions
 
