@@ -20,8 +20,11 @@
 }
 
 .shaka-skim-container {
-    transition: opacity linear 0s!important;
-    -webkit-transition: opacity linear 0s!important;
+    background: linear-gradient(to top,#000 0,rgba(0,0,0,0) 70px)!important;
+}
+.shaka-controls-button-panel, .shaka-seek-bar-container, .shaka-skim-container {
+    transition: opacity linear 0.2s!important;
+    -webkit-transition: opacity linear 0.2s!important;
 }
 
 .shaka-settings-menu {
