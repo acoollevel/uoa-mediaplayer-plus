@@ -2,6 +2,8 @@
 
 Various improvements to the new UoA mediaplayer.
 
+[![Chrome Web Store Badge](https://github.com/acoollevel/uoa-mediaplayer-plus/raw/master/assets/chrome-web-store-badge.png "Get from the Chrome Web Store")](https://chrome.google.com/webstore/detail/uoa-mediaplayerplus/oohpedaigajmdamiaboobdjijopldlkd)
+
 ## Features
 - Download button for watching lectures offline
 - Keyboard shortcuts:
@@ -9,6 +11,7 @@ Various improvements to the new UoA mediaplayer.
   - 'K' to play/pause
   - 'F' to go fullscreen
 - Various other fixes and improvements
+- Automatically skip copyright notice
 
 ## Download
 
