@@ -9,6 +9,7 @@ Various improvements to the new UoA mediaplayer.
   - 'K' to play/pause
   - 'F' to go fullscreen
 - Various other fixes and improvements
+- Automatically skip copyright notice
 
 ## Download
 
