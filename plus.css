@@ -3,10 +3,11 @@
     --ion-background-color: black!important;
 }
 
-#video-container {
+#video-container, video {
     /* Make video span entire window */
     max-width: 100%!important;
     max-height: 100%!important;
+    height: 100vh;
 }
 
 /* Hide massive centre playbutton */
