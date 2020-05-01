@@ -3,6 +3,16 @@ var controls;
 var loaded = false;
 var intended_speed = 1;
 
+function downloadURI(uri, name) {
+    var link = document.createElement("a");
+    link.download = name;
+    link.href = uri;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    delete link;
+  }
+
 document.arrive(".shaka-volume-bar-container", function() {
     if (!loaded) {
         loaded = true;
@@ -29,6 +39,19 @@ document.arrive(".shaka-volume-bar-container", function() {
             url_string = window.location.href;
             url_string = url_string.replace('.preview', '.mp4');
             window.open(url_string,'_blank');
+        });
+
+        // snapshot button
+        screenshot_button = "<button class='material-icons' id='mpp-screenshot' aria-label='Screenshot' title='Take Screenshot'>center_focus_weak</button>"
+        vol_slider.insertAdjacentHTML("afterend", screenshot_button);
+        document.getElementById("mpp-screenshot").addEventListener('click', function() {
+            var canvas = document.createElement('canvas');
+            canvas.width = vid.videoWidth;
+            canvas.height = vid.videoHeight;
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(vid, 0, 0, canvas.width, canvas.height);
+            var dataURI = canvas.toDataURL('image/jpeg'); // can also use 'image/png'
+            downloadURI(dataURI, "My Screenshot");
         });
 
         // keep intended speed
