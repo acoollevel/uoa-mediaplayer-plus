@@ -9,6 +9,10 @@
             {
                 "version": "0.2",
                 "update_link": "https://github.com/acoollevel/uoa-mediaplayer-plus/releases/download/0.2/uoa_mediaplayerplus-0.2-fx.xpi"
+            },
+            {
+                "version": "0.2.1",
+                "update_link": "https://github.com/acoollevel/uoa-mediaplayer-plus/releases/download/0.2.1/uoa_mediaplayerplus-0.2.1-fx.xpi"
             }
         ]
         }

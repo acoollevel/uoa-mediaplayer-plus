@@ -8,8 +8,9 @@ Various improvements to the new UoA mediaplayer.
   - 'J' and 'L' for seeking
   - 'K' to play/pause
   - 'F' to go fullscreen
-- Various other fixes and improvements
+  - '>' to speed up and '<' to slow down
 - Automatically skip copyright notice
+- Various other fixes and improvements
 
 ## Download
 
@@ -19,9 +20,9 @@ Available on the [Chrome Web Store](https://chrome.google.com/webstore/detail/uo
 [![Chrome Web Store Badge](https://github.com/acoollevel/uoa-mediaplayer-plus/raw/master/assets/chrome-web-store-badge.png "Get from the Chrome Web Store")](https://chrome.google.com/webstore/detail/uoa-mediaplayerplus/oohpedaigajmdamiaboobdjijopldlkd)
 
 ### Firefox
-Not available on AMO due to limited audience. You can get the .xpi file directly from [Github](https://github.com/acoollevel/uoa-mediaplayer-plus/releases/latest). Don't worry, it will still automatically update.
+Not available on AMO due to limited audience. You can get the .xpi file directly from [Github](https://github.com/acoollevel/uoa-mediaplayer-plus/releases/download/0.2.1/uoa_mediaplayerplus-0.2.1-fx.xpi). Don't worry, it will still automatically update.
 
-[![Firefox Badge](https://github.com/acoollevel/uoa-mediaplayer-plus/raw/master/assets/firefox-badge.png "Download Firefox Addon")](https://github.com/acoollevel/uoa-mediaplayer-plus/releases/download/0.2/uoa_mediaplayerplus-0.2-fx.xpi)
+[![Firefox Badge](https://github.com/acoollevel/uoa-mediaplayer-plus/raw/master/assets/firefox-badge.png "Download Firefox Addon")](https://github.com/acoollevel/uoa-mediaplayer-plus/releases/download/0.2.1/uoa_mediaplayerplus-0.2.1-fx.xpi)
 
 ## Bugs & Suggestions
 
