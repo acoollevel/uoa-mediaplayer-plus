@@ -103,4 +103,24 @@ document.addEventListener('keydown', function(event) {
             vid.volume = 0;
         }
     }
+
+    // Increase speed with '.'
+    if(event.keyCode == 190) {
+        event.preventDefault();
+        vid.playbackRate = vid.playbackRate + 0.25;
+        if (vid.playbackRate > 3) {
+            vid.playbackRate = 3;
+        }
+        intended_speed = vid.playbackRate;
+    }
+
+    // Decrease speed with ','
+    if(event.keyCode == 188) {
+        event.preventDefault();
+        vid.playbackRate = vid.playbackRate - 0.25;
+        if (vid.playbackRate < 0.25) {
+            vid.playbackRate = 0.25;
+        }
+        intended_speed = vid.playbackRate;
+    }
 });
