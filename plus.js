@@ -70,6 +70,28 @@ document.arrive(".shaka-volume-bar-container", function() {
                 vid.pause();
             }
         });
+
+        // volume button
+        volume_button = "<button class='material-icons' id='mpp-volume' aria-label='Toggle Sound' title='Toggle Sound'>volume_up</button>"
+        document.getElementsByClassName("shaka-volume-bar-container")[0].insertAdjacentHTML("beforebegin", volume_button);
+        volume_button = document.getElementById("mpp-volume");
+        document.getElementById("mpp-volume").addEventListener('click', function() {
+            if (vid.muted) {
+                vid.muted = false;
+            } else {
+                vid.muted = true;
+            }
+        });
+        vid.addEventListener("volumechange", function() {
+            console.log(vid.volume)
+            if (vid.muted) {
+                volume_button.innerHTML = "volume_off"
+            } else if (vid.volume < 0.5) {
+                volume_button.innerHTML = "volume_down"
+            } else {
+                volume_button.innerHTML = "volume_up"
+            }
+        });
     }
 });
 
@@ -145,5 +167,14 @@ document.addEventListener('keydown', function(event) {
             vid.playbackRate = 0.25;
         }
         intended_speed = vid.playbackRate;
+    }
+
+    // Mute/unmute with 'm'
+    if(event.keyCode == 77) {
+        if (vid.muted) {
+            vid.muted = false;
+        } else {
+            vid.muted = true;
+        }
     }
 });

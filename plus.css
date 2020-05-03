@@ -33,3 +33,7 @@
     right: 45px!important;
     bottom: 80px!important;
 }
+
+.shaka-volume-bar-container {
+    margin-right: 30px;
+}
