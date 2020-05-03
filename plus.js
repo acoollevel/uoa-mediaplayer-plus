@@ -42,7 +42,7 @@ document.arrive(".shaka-volume-bar-container", function() {
         });
 
         // snapshot button
-        screenshot_button = "<button class='material-icons' id='mpp-screenshot' aria-label='Screenshot' title='Take Screenshot'>center_focus_weak</button>"
+        screenshot_button = "<button class='material-icons' id='mpp-screenshot' aria-label='Screenshot' title='Take Screenshot'>wallpaper</button>"
         vol_slider.insertAdjacentHTML("afterend", screenshot_button);
         document.getElementById("mpp-screenshot").addEventListener('click', function() {
             var canvas = document.createElement('canvas');
