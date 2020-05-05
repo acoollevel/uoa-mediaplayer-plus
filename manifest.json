@@ -6,8 +6,13 @@
   
     "description": "Unofficial improvements to the UoA mediaplayer.",
 
+    "permissions": [
+      "storage"
+    ],
+
     "browser_specific_settings": {
       "gecko": {
+        "id": "{cceae834-2b2c-4073-adc2-15246d1bf2ed}",
         "update_url": "https://raw.githubusercontent.com/acoollevel/uoa-mediaplayer-plus/master/updates.json"
       }
     },

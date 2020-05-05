@@ -3,6 +3,21 @@ var controls;
 var loaded = false;
 var intended_speed = 1;
 
+// declare default values for video data
+var video_data = {
+    position: 42, // default start position, skips copyright message
+}
+
+// get unique video id
+var video_id = window.location.href.replace(".preview", "").replace("https://mediaplayer.auckland.ac.nz", "")
+
+// load video data from local storage
+var load_data = chrome.storage.sync.get(video_id, function(result) {
+    console.log(result);
+    Object.assign(video_data, result.key)
+    console.log("data copied")
+});
+
 function downloadURI(uri, name) {
     var link = document.createElement("a");
     link.download = name;
@@ -11,7 +26,7 @@ function downloadURI(uri, name) {
     link.click();
     document.body.removeChild(link);
     delete link;
-  }
+}
 
 document.arrive(".shaka-volume-bar-container", function() {
     if (!loaded) {
@@ -22,15 +37,21 @@ document.arrive(".shaka-volume-bar-container", function() {
         vid.addEventListener('play', function() {
             vid.playbackRate = intended_speed; // make sure playback speed is still correct
             document.getElementById("mpp-play").innerHTML = "pause" // update play icon
-        })
+        });
         vid.addEventListener('pause', function() {
             document.getElementById("mpp-play").innerHTML = "play_arrow" // update play icon
-        })
+        });
+        vid.addEventListener("timeupdate", function() {
+            console.log("time updated to:" + vid.currentTime)
+            video_data.position = vid.currentTime;
+        });
         controls = document.getElementsByClassName("shaka-controls-container")[0]
         vol_slider = document.getElementsByClassName("shaka-volume-bar-container")[0]
 
-        // skip copyright warning
-        vid.currentTime = 42;
+        console.log("data before skip")
+        console.log(video_data);
+        // skip to last position
+        vid.currentTime = video_data.position;
 
         // download button
         download_button = "<button class='material-icons' id='mpp-download' aria-label='Download' title='Download'>get_app</button>"
@@ -83,7 +104,6 @@ document.arrive(".shaka-volume-bar-container", function() {
             }
         });
         vid.addEventListener("volumechange", function() {
-            console.log(vid.volume)
             if (vid.muted) {
                 volume_button.innerHTML = "volume_off"
             } else if (vid.volume < 0.5) {
@@ -178,3 +198,11 @@ document.addEventListener('keydown', function(event) {
         }
     }
 });
+
+window.onbeforeunload = function(){
+    this.console.log("data before unload")
+    this.console.log(video_data);
+    chrome.storage.sync.set({video_id: video_data}, function() {
+        console.log("complete!")
+    });
+};
