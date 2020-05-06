@@ -206,6 +206,13 @@ document.addEventListener('keydown', function(event) {
         intended_speed = vid.playbackRate;
     }
 
+    // Reset speed with '/'
+    if(event.keyCode == 191) {
+        event.preventDefault();
+        vid.playbackRate = 1;
+        intended_speed = vid.playbackRate;
+    }
+
     // Mute/unmute with 'm'
     if(event.keyCode == 77) {
         if (vid.muted) {
