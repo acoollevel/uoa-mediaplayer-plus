@@ -1,6 +1,6 @@
 # UoA MediaplayerPlus
 
-Various improvements to the new UoA mediaplayer.
+Various improvements to the new UoA mediaplayer (mediaplayer.auckland.ac.nz).
 
 ## Features
 - Download button for watching lectures offline
