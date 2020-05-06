@@ -9,14 +9,18 @@ var video_data = {
 }
 
 // get unique video id
-var video_id = window.location.href.replace(".preview", "").replace("https://mediaplayer.auckland.ac.nz", "")
+var video_id = window.location.href.replace(".preview", "").replace("https://mediaplayer.auckland.ac.nz", "");
 
 // load video data from local storage
-var load_data = chrome.storage.sync.get(video_id, function(result) {
-    console.log(result);
-    Object.assign(video_data, result.key)
-    console.log("data copied")
+chrome.storage.sync.get(video_id, function(result) {
+    video_data = {...video_data, ...result[video_id]};
 });
+
+window.onbeforeunload = function(){
+    chrome.storage.sync.set({[video_id]: video_data}, function() {
+        console.log("complete!")
+    });
+};
 
 function downloadURI(uri, name) {
     var link = document.createElement("a");
@@ -198,11 +202,3 @@ document.addEventListener('keydown', function(event) {
         }
     }
 });
-
-window.onbeforeunload = function(){
-    this.console.log("data before unload")
-    this.console.log(video_data);
-    chrome.storage.sync.set({video_id: video_data}, function() {
-        console.log("complete!")
-    });
-};
