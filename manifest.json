@@ -5,6 +5,14 @@
     "version": "0.2.1",
   
     "description": "Unofficial improvements to the UoA mediaplayer.",
+    "icons": {
+      "16": "static/images/logo-16.png",
+      "32": "static/images/logo-32.png",
+      "48": "static/images/logo-48.png",
+      "96": "static/images/logo-96.png",
+      "128": "static/images/logo-128.png",
+      "256": "static/images/logo-256.png"
+    },
 
     "permissions": [
       "storage"
