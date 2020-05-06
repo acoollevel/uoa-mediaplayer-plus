@@ -3,6 +3,11 @@ var controls;
 var loaded = false;
 var intended_speed = 1;
 
+// declare default values for settings
+var settings = {
+    volume: 1,
+}
+
 // declare default values for video data
 var video_data = {
     position: 42, // default start position, skips copyright message
@@ -12,14 +17,18 @@ var video_data = {
 var video_id = window.location.href.replace(".preview", "").replace("https://mediaplayer.auckland.ac.nz", "");
 
 // load video data from local storage
-chrome.storage.sync.get(video_id, function(result) {
+chrome.storage.sync.get([video_id, "settings"], function(result) {
+    console.log(result);
     video_data = {...video_data, ...result[video_id]};
+    settings = {...settings, ...result["settings"]};
+    console.log(settings);
 });
 
+// before the user leaves, save settings
 window.onbeforeunload = function(){
-    chrome.storage.sync.set({[video_id]: video_data}, function() {
-        console.log("complete!")
-    });
+    chrome.storage.sync.set({[video_id]: video_data});
+    this.console.log(settings);
+    chrome.storage.sync.set({"settings": settings});
 };
 
 function downloadURI(uri, name) {
@@ -46,16 +55,20 @@ document.arrive(".shaka-volume-bar-container", function() {
             document.getElementById("mpp-play").innerHTML = "play_arrow" // update play icon
         });
         vid.addEventListener("timeupdate", function() {
-            console.log("time updated to:" + vid.currentTime)
             video_data.position = vid.currentTime;
+        });
+        vid.addEventListener("volumechange", function() {
+            settings.volume = vid.volume;
+            if (vid.muted) {
+                settings.volume = 0;
+            }
         });
         controls = document.getElementsByClassName("shaka-controls-container")[0]
         vol_slider = document.getElementsByClassName("shaka-volume-bar-container")[0]
 
-        console.log("data before skip")
-        console.log(video_data);
-        // skip to last position
+        // apply settings
         vid.currentTime = video_data.position;
+        vid.volume = settings.volume;
 
         // download button
         download_button = "<button class='material-icons' id='mpp-download' aria-label='Download' title='Download'>get_app</button>"
