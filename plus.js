@@ -41,6 +41,21 @@ function downloadURI(uri, name) {
     delete link;
 }
 
+var popup_timeout;
+var popup;
+function show_popup(icon, string) {
+    popup.innerHTML = "<span class='material-icons'>" + icon + "</span><p>" + string + "</p>";
+    popup.classList.add("show-action-popup");
+    try {
+        clearTimeout(popup_timeout);
+    } catch {}
+    timeout = setTimeout(function(){ popup.classList.remove("show-action-popup"); }, 500);
+}
+document.addEventListener("visibilitychange", function() {
+    // make sure popup is hidden
+    popup.classList.remove("show-action-popup");
+});
+
 document.arrive(".shaka-volume-bar-container", function() {
     if (!loaded) {
         loaded = true;
@@ -69,6 +84,11 @@ document.arrive(".shaka-volume-bar-container", function() {
         // apply settings
         vid.currentTime = video_data.position;
         vid.volume = settings.volume;
+
+        // action info popup
+        action_popup = "<div id='mpp-action-popup'></div>";
+        document.getElementsByClassName("ion-page")[0].insertAdjacentHTML("afterbegin", action_popup);
+        popup = document.getElementById("mpp-action-popup");
 
         // download button
         download_button = "<button class='material-icons' id='mpp-download' aria-label='Download' title='Download'>get_app</button>"
@@ -146,8 +166,10 @@ document.addEventListener('keydown', function(event) {
         event.preventDefault();
         if (vid.paused) {
             vid.play();
+            show_popup("play_arrow", "Play");
         } else {
             vid.pause();
+            show_popup("pause", "Pause");
         }
     }
 
@@ -160,12 +182,14 @@ document.addEventListener('keydown', function(event) {
     if(event.keyCode == 39 || event.keyCode == 76) {
         event.preventDefault();
         vid.currentTime = vid.currentTime + 5;
+        show_popup("skip_next", "Seek");
     }
 
     // Seek backwards with '⬅', 'j'
     if(event.keyCode == 37 || event.keyCode == 74) {
         event.preventDefault();
         vid.currentTime = vid.currentTime - 5;
+        show_popup("skip_previous", "Seek");
     }
 
     // Volume up with '⬆'
@@ -175,6 +199,7 @@ document.addEventListener('keydown', function(event) {
         if (vid.volume > 0.95) {
             vid.volume = 1;
         }
+        show_popup("volume_up", Math.round(vid.volume*100));
     }
 
     // Volume up with '⬇'
@@ -184,6 +209,7 @@ document.addEventListener('keydown', function(event) {
         if (vid.volume < 0.05) {
             vid.volume = 0;
         }
+        show_popup("volume_down", Math.round(vid.volume*100));
     }
 
     // Increase speed with '.'
@@ -194,6 +220,7 @@ document.addEventListener('keydown', function(event) {
             vid.playbackRate = 3;
         }
         intended_speed = vid.playbackRate;
+        show_popup("fast_forward", vid.playbackRate);
     }
 
     // Decrease speed with ','
@@ -204,6 +231,7 @@ document.addEventListener('keydown', function(event) {
             vid.playbackRate = 0.25;
         }
         intended_speed = vid.playbackRate;
+        show_popup("fast_rewind", vid.playbackRate);
     }
 
     // Reset speed with '/'
@@ -211,14 +239,17 @@ document.addEventListener('keydown', function(event) {
         event.preventDefault();
         vid.playbackRate = 1;
         intended_speed = vid.playbackRate;
+        show_popup("speed", "Speed Reset");
     }
 
     // Mute/unmute with 'm'
     if(event.keyCode == 77) {
         if (vid.muted) {
             vid.muted = false;
+            show_popup("volume_up", "Unmuted");
         } else {
             vid.muted = true;
+            show_popup("volume_off", "Muted");
         }
     }
 });
