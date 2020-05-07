@@ -7,20 +7,41 @@
 	<meta name="theme-color" content="#020660" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 	<meta name="google-site-verification" content="cxNDclvi6JiNqeOmTv-F4HpMLAymUHUtkCcwEV-b9-g" />
-	<link rel="stylesheet" href="static/main.css" />
+	<link rel="stylesheet" href="/static/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
 	
-	<title>UoA MediaplayerPlus</title>
-	<meta name="description" content="" />
+	<title>Home | UoA MediaplayerPlus</title>
+	<meta name="description" content="Browser extension that improves the playback interface for the University of Auckland's media player." />
 </head>
 
 <body>
-	<div class="hero">
+  <div class="nav">
+    <div class="container">
+      <a href='/' >
+        <img src="/static/logo-256.png" />
+        <span class="name">UoA MediaplayerPlus</span>
+      </a>
+      
+        <a class="link" href="/blog" >
+          Blog
+        </a>
+      
+      <button class="right" onclick="window.location.href='/'">Download Extension</button>
+    </div>
+  </div>
+  
+	<div class="hero" id="install">
 		<div class="container">
-			<h1 id="uoa-mediaplayerplus">UoA MediaplayerPlus</h1>
-
-<p>Various improvements to the new UoA mediaplayer (mediaplayer.auckland.ac.nz).</p>
-
-<h2 id="features">Features</h2>
+      <h1>UoA MediaplayerPlus</h1>
+      <p>Improvements to the Mediaplayer used by the University of Auckland</p>
+      <button onclick="window.location.href='https://chrome.google.com/webstore/detail/uoa-mediaplayerplus/oohpedaigajmdamiaboobdjijopldlkd'"><i class="fab fa-chrome"></i>Add to Chrome</button>
+      <button onclick="window.location.href='https://github.com/acoollevel/uoa-mediaplayer-plus/releases/download/0.2.1/uoa_mediaplayerplus-0.2.1-fx.xpi'"><i class="fab fa-firefox-browser"></i>Add to Firefox</button>
+      <button onclick="window.location.href='https://github.com/acoollevel/uoa-mediaplayer-plus'"><i class="fab fa-github"></i>View on Github</button>
+		</div>
+  </div>
+  
+  <div class="container">
+    <h2 id="features">Features</h2>
 <ul>
   <li>Download button for watching lectures offline</li>
   <li>Keyboard shortcuts:
@@ -35,8 +56,7 @@
   <li>Various other fixes and improvements</li>
 </ul>
 
-		</div>
-	</div>
+  </div>
 </body>
 
 </html>

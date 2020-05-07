@@ -7,18 +7,44 @@
 	<meta name="theme-color" content="#020660" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 	<meta name="google-site-verification" content="cxNDclvi6JiNqeOmTv-F4HpMLAymUHUtkCcwEV-b9-g" />
-	<link rel="stylesheet" href="static/main.css" />
+	<link rel="stylesheet" href="/static/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
 	
-	<title>{{ page.title }}</title>
+	<title>{{ page.title }} | UoA MediaplayerPlus</title>
 	<meta name="description" content="{{ page.description }}" />
 </head>
 
 <body>
-	<div class="hero">
+  <div class="nav">
+    <div class="container">
+      <a href='/' >
+        <img src="/static/logo-256.png" />
+        <span class="name">UoA MediaplayerPlus</span>
+      </a>
+      {% for item in site.data.navigation %}
+        <a class="link" href="{{ item.link }}" {% if page.url == item.link %}style="font-weight: bold;"{% endif %}>
+          {{ item.name }}
+        </a>
+      {% endfor %}
+      <button class="right" onclick="window.location.href='/'">Download Extension</button>
+    </div>
+  </div>
+  {% if page.hero %}
+	<div class="hero" id="install">
 		<div class="container">
-			{{ content }}
+      <h1>UoA MediaplayerPlus</h1>
+      <p>Improvements to the Mediaplayer used by the University of Auckland</p>
+      <button onclick="window.location.href='{{ site.urls.chrome }}'"><i class="fab fa-chrome"></i>Add to Chrome</button>
+      <button onclick="window.location.href='{{ site.urls.firefox }}'"><i class="fab fa-firefox-browser"></i>Add to Firefox</button>
+      <button onclick="window.location.href='{{ site.urls.github }}'"><i class="fab fa-github"></i>View on Github</button>
 		</div>
-	</div>
+  </div>
+  {% else %}
+  <div class="spacer"></div>
+  {% endif %}
+  <div class="container">
+    {{ content }}
+  </div>
 </body>
 
 </html>

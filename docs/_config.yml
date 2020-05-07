@@ -1,0 +1,8 @@
+urls:
+  chrome: "https://chrome.google.com/webstore/detail/uoa-mediaplayerplus/oohpedaigajmdamiaboobdjijopldlkd"
+  firefox: "https://github.com/acoollevel/uoa-mediaplayer-plus/releases/download/0.2.1/uoa_mediaplayerplus-0.2.1-fx.xpi"
+  github: "https://github.com/acoollevel/uoa-mediaplayer-plus"
+
+collections:
+  authors:
+    
