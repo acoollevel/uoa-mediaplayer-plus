@@ -31,16 +31,6 @@ window.onbeforeunload = function(){
     chrome.storage.sync.set({"settings": settings});
 };
 
-function downloadURI(uri, name) {
-    var link = document.createElement("a");
-    link.download = name;
-    link.href = uri;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    delete link;
-}
-
 var popup_timeout;
 var popup;
 function show_popup(icon, string) {
