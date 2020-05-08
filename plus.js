@@ -3,30 +3,48 @@ var controls;
 var loaded = false;
 var intended_speed = 1;
 
+// declare default values for settings
+var settings = {
+    volume: 1,
+}
+
 // declare default values for video data
 var video_data = {
     position: 42, // default start position, skips copyright message
 }
 
 // get unique video id
-var video_id = window.location.href.replace(".preview", "").replace("https://mediaplayer.auckland.ac.nz", "")
+var video_id = window.location.href.replace(".preview", "").replace("https://mediaplayer.auckland.ac.nz", "");
 
 // load video data from local storage
-var load_data = chrome.storage.sync.get(video_id, function(result) {
+chrome.storage.sync.get([video_id, "settings"], function(result) {
     console.log(result);
-    Object.assign(video_data, result.key)
-    console.log("data copied")
+    video_data = {...video_data, ...result[video_id]};
+    settings = {...settings, ...result["settings"]};
+    console.log(settings);
 });
 
-function downloadURI(uri, name) {
-    var link = document.createElement("a");
-    link.download = name;
-    link.href = uri;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    delete link;
+// before the user leaves, save settings
+window.onbeforeunload = function(){
+    chrome.storage.sync.set({[video_id]: video_data});
+    this.console.log(settings);
+    chrome.storage.sync.set({"settings": settings});
+};
+
+var popup_timeout;
+var popup;
+function show_popup(icon, string) {
+    popup.innerHTML = "<span class='material-icons'>" + icon + "</span><p>" + string + "</p>";
+    popup.classList.add("show-action-popup");
+    try {
+        clearTimeout(popup_timeout);
+    } catch {}
+    timeout = setTimeout(function(){ popup.classList.remove("show-action-popup"); }, 500);
 }
+document.addEventListener("visibilitychange", function() {
+    // make sure popup is hidden
+    popup.classList.remove("show-action-popup");
+});
 
 document.arrive(".shaka-volume-bar-container", function() {
     if (!loaded) {
@@ -42,16 +60,25 @@ document.arrive(".shaka-volume-bar-container", function() {
             document.getElementById("mpp-play").innerHTML = "play_arrow" // update play icon
         });
         vid.addEventListener("timeupdate", function() {
-            console.log("time updated to:" + vid.currentTime)
             video_data.position = vid.currentTime;
+        });
+        vid.addEventListener("volumechange", function() {
+            settings.volume = vid.volume;
+            if (vid.muted) {
+                settings.volume = 0;
+            }
         });
         controls = document.getElementsByClassName("shaka-controls-container")[0]
         vol_slider = document.getElementsByClassName("shaka-volume-bar-container")[0]
 
-        console.log("data before skip")
-        console.log(video_data);
-        // skip to last position
+        // apply settings
         vid.currentTime = video_data.position;
+        vid.volume = settings.volume;
+
+        // action info popup
+        action_popup = "<div id='mpp-action-popup'></div>";
+        document.getElementsByClassName("ion-page")[0].insertAdjacentHTML("afterbegin", action_popup);
+        popup = document.getElementById("mpp-action-popup");
 
         // download button
         download_button = "<button class='material-icons' id='mpp-download' aria-label='Download' title='Download'>get_app</button>"
@@ -129,8 +156,10 @@ document.addEventListener('keydown', function(event) {
         event.preventDefault();
         if (vid.paused) {
             vid.play();
+            show_popup("play_arrow", "Play");
         } else {
             vid.pause();
+            show_popup("pause", "Pause");
         }
     }
 
@@ -143,12 +172,14 @@ document.addEventListener('keydown', function(event) {
     if(event.keyCode == 39 || event.keyCode == 76) {
         event.preventDefault();
         vid.currentTime = vid.currentTime + 5;
+        show_popup("skip_next", "Seek");
     }
 
     // Seek backwards with '⬅', 'j'
     if(event.keyCode == 37 || event.keyCode == 74) {
         event.preventDefault();
         vid.currentTime = vid.currentTime - 5;
+        show_popup("skip_previous", "Seek");
     }
 
     // Volume up with '⬆'
@@ -158,6 +189,7 @@ document.addEventListener('keydown', function(event) {
         if (vid.volume > 0.95) {
             vid.volume = 1;
         }
+        show_popup("volume_up", Math.round(vid.volume*100));
     }
 
     // Volume up with '⬇'
@@ -167,6 +199,7 @@ document.addEventListener('keydown', function(event) {
         if (vid.volume < 0.05) {
             vid.volume = 0;
         }
+        show_popup("volume_down", Math.round(vid.volume*100));
     }
 
     // Increase speed with '.'
@@ -177,6 +210,7 @@ document.addEventListener('keydown', function(event) {
             vid.playbackRate = 3;
         }
         intended_speed = vid.playbackRate;
+        show_popup("fast_forward", vid.playbackRate);
     }
 
     // Decrease speed with ','
@@ -187,22 +221,25 @@ document.addEventListener('keydown', function(event) {
             vid.playbackRate = 0.25;
         }
         intended_speed = vid.playbackRate;
+        show_popup("fast_rewind", vid.playbackRate);
+    }
+
+    // Reset speed with '/'
+    if(event.keyCode == 191) {
+        event.preventDefault();
+        vid.playbackRate = 1;
+        intended_speed = vid.playbackRate;
+        show_popup("speed", "Speed Reset");
     }
 
     // Mute/unmute with 'm'
     if(event.keyCode == 77) {
         if (vid.muted) {
             vid.muted = false;
+            show_popup("volume_up", "Unmuted");
         } else {
             vid.muted = true;
+            show_popup("volume_off", "Muted");
         }
     }
 });
-
-window.onbeforeunload = function(){
-    this.console.log("data before unload")
-    this.console.log(video_data);
-    chrome.storage.sync.set({video_id: video_data}, function() {
-        console.log("complete!")
-    });
-};

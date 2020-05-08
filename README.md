@@ -3,14 +3,22 @@
 Various improvements to the new UoA mediaplayer (mediaplayer.auckland.ac.nz).
 
 ## Features
-- Download button for watching lectures offline
-- Keyboard shortcuts:
-  - 'J' and 'L' for seeking
-  - 'K' to play/pause
-  - 'F' to go fullscreen
+- Adds a download button for watching lectures offline
+- Adds in Keyboard shortcuts:
+  - 'L' to seek forwards and 'J' to seek backwards
+  - 'K' or 'Spacebar' to play/pause
+  - 'F' to enter/exit fullscreen
   - '>' to speed up and '<' to slow down
-- Automatically skip copyright notice
+- Automatically skips the copyright notice
 - Various other fixes and improvements
+
+## Important Note
+
+This plugin **only** works with videos that are in the `mediaplayer.auckland.ac.nz` format not the `mediastore.auckland.ac.nz` one. If the plugin does not work on a video, check to see if the link is a `mediaplayer` one. If not, you can try to change `mediastore` to `mediaplayer` in the address bar, as this often works.
+
+We will be working on removing this limitation in the near future, so that the plugin will work with both `mediaplayer` and `mediastore` videos!
+
+---
 
 ## Download
 
@@ -20,16 +28,25 @@ Available on the [Chrome Web Store](https://chrome.google.com/webstore/detail/uo
 [![Chrome Web Store Badge](https://github.com/acoollevel/uoa-mediaplayer-plus/raw/master/assets/chrome-web-store-badge.png "Get from the Chrome Web Store")](https://chrome.google.com/webstore/detail/uoa-mediaplayerplus/oohpedaigajmdamiaboobdjijopldlkd)
 
 ### Firefox
-Not available on AMO due to limited audience. You can get the .xpi file directly from [Github](https://github.com/acoollevel/uoa-mediaplayer-plus/releases/download/0.2.1/uoa_mediaplayerplus-0.2.1-fx.xpi). Don't worry, it will still automatically update.
+This is not available on [Mozilla Addons](https://addons.mozilla.org) at this time, due to Mozilla's Policies. However, we do fully support Firefox. You can simply install it by clicking the image below. Don't worry, it will still automatically update!
 
 [![Firefox Badge](https://github.com/acoollevel/uoa-mediaplayer-plus/raw/master/assets/firefox-badge.png "Download Firefox Addon")](https://github.com/acoollevel/uoa-mediaplayer-plus/releases/download/0.2.1/uoa_mediaplayerplus-0.2.1-fx.xpi)
+
+_If for some reason you cannot install it using the button above, you can install it by clicking the .xpi file under the latest release here: [Releases](https://github.com/acoollevel/uoa-mediaplayer-plus/releases)_
+
+---
 
 ## Bugs & Suggestions
 
 ### For users
 
-If you have any suggestions or problems, you can easily report them [here](https://chrome.google.com/webstore/detail/uoa-mediaplayerplus/oohpedaigajmdamiaboobdjijopldlkd/support).
+**💬 Discord:** We have a Discord Server that users are welcome to join! You can get access by clicking [here](https://discord.gg/sJbs6hu).  
+This is the place where you can reach out with any problems, questions, or suggestions, that you may have around this plugin.
+
+**For Chrome Users:** If you have any suggestions or problems, you can also easily report them on the store page [here](https://chrome.google.com/webstore/detail/uoa-mediaplayerplus/oohpedaigajmdamiaboobdjijopldlkd/support).
 
 ### For developers
 
-New issues and pull requests are welcome! If you are submitting an issue, please provide as much detail as possible. This includes what browser you are using.
+New issues and pull requests are welcome! If you are submitting an issue, please provide as much detail as possible. This includes what browser you are using, and the version of the plugin.  
+If you are submitting a change to the codebase, please direct your pull requests to the [development](https://github.com/acoollevel/uoa-mediaplayer-plus/tree/development) branch, not the master branch.  
+Please also comment your code before you submit it, to make it easier for others to work with in the future.
