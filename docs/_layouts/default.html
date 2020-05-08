@@ -16,12 +16,12 @@
 <body>
   <div class="nav">
     <div class="container">
-      <a href='/' >
+      <a href='{{ baseurl }}' >
         <img src="{{ baseurl }}/static/logo-256.png" />
         <span class="name">UoA MediaplayerPlus</span>
       </a>
       {% for item in site.data.navigation %}
-        <a class="link" href="{{ item.link }}" {% if page.url == item.link %}style="font-weight: bold;"{% endif %}>
+        <a class="link" href="{{ baseurl }}/{{ item.link }}" {% if page.url == item.link %}style="font-weight: bold;"{% endif %}>
           {{ item.name }}
         </a>
       {% endfor %}
