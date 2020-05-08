@@ -6,7 +6,7 @@ layout: default
     {{ page.date | date_to_string }} -
     {% assign author = site.authors | where: 'name', page.author | first %}
     {% if author %}
-        <a href="{{ author.profile }}">@{{ author.name }}</a>
+        <a href="{{ baseurl }}/{{ author.profile }}">@{{ author.name }}</a>
     {% endif %}
 </p>
 
