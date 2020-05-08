@@ -103,3 +103,33 @@ button:hover {
 .right {
     float: right;
 }
+
+footer {
+    background-color: rgb(235, 235, 235);
+    text-align: center;
+    padding: 30px;
+    margin-top: 100px!important;
+}
+
+footer a {
+    font-size: 30px;
+    color: black;
+}
+
+footer p, footer p a {
+    font-size: 10px;
+    color: gray;
+}
+
+footer .icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 50px;
+}
+
+button .icon {
+    width: 15px;
+    float: left;
+    margin-right: 10px;
+    filter: invert(1);
+}
