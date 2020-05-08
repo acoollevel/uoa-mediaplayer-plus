@@ -25,7 +25,9 @@
           {{ item.name }}
         </a>
       {% endfor %}
+      {% if page.hero != true %}
       <button class="right" onclick="window.location.href='{{ site.baseurl }}/'">Download Extension</button>
+      {% endif %}
     </div>
   </div>
   {% if page.hero %}
