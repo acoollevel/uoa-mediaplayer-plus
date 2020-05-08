@@ -50,6 +50,7 @@ button:hover {
     margin: auto;
     background-color: white;
     top: 0;
+    z-index: 1;
 }
 
 @supports (backdrop-filter: none) {
