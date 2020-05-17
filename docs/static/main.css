@@ -1,0 +1,136 @@
+@media only screen and (max-width: 800px) {
+    .name, .nav button {
+      display: none;
+    }
+  }
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+    border: none;
+    border: 1px solid rgba(2, 37, 150, 0);
+    background-color: rgb(2, 37, 150);
+    padding: 15px 27px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 4.5px;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 50px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.1s;
+    box-sizing: border-box;
+}
+
+button i {
+    margin-right: 5px;
+}
+
+button:hover {
+    cursor: pointer;
+    border: 1px solid rgb(102, 129, 216);
+    background-color: rgb(0, 27, 114);
+}
+
+.container {
+    width: 70%;
+    margin: auto;
+    max-width: 800px;
+}
+
+.nav {
+    height: 60px;
+    position: fixed;
+    width: 100%;
+    margin: auto;
+    background-color: white;
+    top: 0;
+    z-index: 1;
+}
+
+@supports (backdrop-filter: none) {
+    .nav {
+        background-color: rgba(255,255,255,0.7);
+        backdrop-filter: blur(10px);
+    }
+}
+
+.nav img {
+    height: 40px;
+    margin-top: 10px;
+}
+
+.nav a {
+    text-decoration: none;
+}
+
+.nav .name {
+    bottom: 12px;
+    position: relative;
+    left: 10px;
+    font-size: 21px;
+}
+
+.nav .link {
+    text-align: right;
+    display: inline-block;
+    position: relative;
+    right: -25px;
+    top: -13px;
+}
+
+.spacer {
+    height: 60px;
+}
+
+.hero {
+    background: rgb(11,23,61);
+    background: linear-gradient(113deg, rgba(11,23,61,1) 0%, rgba(9,9,121,1) 47%, rgba(0,111,134,1) 100%);
+    color: white;
+    overflow: auto;
+    text-align: center;
+    padding: 100px 0px;
+}
+
+.hero h1, .hero h2 {
+    margin: 30px;
+}
+
+.right {
+    float: right;
+}
+
+footer {
+    background-color: rgb(235, 235, 235);
+    text-align: center;
+    padding: 30px;
+    margin-top: 100px!important;
+}
+
+footer a {
+    font-size: 30px;
+    color: black;
+}
+
+footer p, footer p a {
+    font-size: 10px;
+    color: gray;
+}
+
+footer .icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 50px;
+}
+
+button .icon {
+    width: 15px;
+    float: left;
+    margin-right: 10px;
+    filter: invert(1);
+}
