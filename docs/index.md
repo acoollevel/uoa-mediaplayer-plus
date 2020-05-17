@@ -1,6 +1,8 @@
-# UoA MediaplayerPlus
-
-Various improvements to the new UoA mediaplayer (mediaplayer.auckland.ac.nz).
+---
+hero: true
+title: Home
+description: Browser extension that improves the playback interface for the University of Auckland's media player.
+---
 
 ## Features
 - Download button for watching lectures offline

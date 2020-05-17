@@ -2,12 +2,25 @@
 
     "manifest_version": 2,
     "name": "UoA MediaplayerPlus",
-    "version": "0.2.1",
+    "version": "0.3",
   
     "description": "Unofficial improvements to the UoA mediaplayer.",
+    "icons": {
+      "16": "static/images/logo-16.png",
+      "32": "static/images/logo-32.png",
+      "48": "static/images/logo-48.png",
+      "96": "static/images/logo-96.png",
+      "128": "static/images/logo-128.png",
+      "256": "static/images/logo-256.png"
+    },
+
+    "permissions": [
+      "storage"
+    ],
 
     "browser_specific_settings": {
       "gecko": {
+        "id": "{cceae834-2b2c-4073-adc2-15246d1bf2ed}",
         "update_url": "https://raw.githubusercontent.com/acoollevel/uoa-mediaplayer-plus/master/updates.json"
       }
     },
@@ -15,7 +28,7 @@
     "content_scripts": [
       {
         "matches": ["*://mediaplayer.auckland.ac.nz/*"],
-        "js": ["arrive.min.js", "plus.js"],
+        "js": ["arrive.min.js", "utils.js", "plus.js"],
         "css" : ["plus.css"]
       }
     ]
