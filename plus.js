@@ -145,6 +145,10 @@ document.arrive(".shaka-volume-bar-container", function() {
 // Keybindings
 document.addEventListener('keydown', function(event) {
 
+    // prevent unexpected browser behaviour
+    event.preventDefault();
+    document.activeElement.blur();
+
     try {
         clearTimeout(timeout);
     } catch {}
@@ -153,7 +157,6 @@ document.addEventListener('keydown', function(event) {
 
     // Pause with spacebar, 'k'
     if(event.keyCode == 32 || event.keyCode == 75) {
-        event.preventDefault();
         if (vid.paused) {
             vid.play();
             show_popup("play_arrow", "Play");
@@ -170,21 +173,18 @@ document.addEventListener('keydown', function(event) {
 
     // Seek forwards with '➡', 'l'
     if(event.keyCode == 39 || event.keyCode == 76) {
-        event.preventDefault();
         vid.currentTime = vid.currentTime + 5;
         show_popup("skip_next", "Seek");
     }
 
     // Seek backwards with '⬅', 'j'
     if(event.keyCode == 37 || event.keyCode == 74) {
-        event.preventDefault();
         vid.currentTime = vid.currentTime - 5;
         show_popup("skip_previous", "Seek");
     }
 
     // Volume up with '⬆'
     if(event.keyCode == 38) {
-        event.preventDefault();
         vid.volume = vid.volume + 0.05;
         if (vid.volume > 0.95) {
             vid.volume = 1;
@@ -194,7 +194,6 @@ document.addEventListener('keydown', function(event) {
 
     // Volume up with '⬇'
     if(event.keyCode == 40) {
-        event.preventDefault();
         vid.volume = vid.volume - 0.05;
         if (vid.volume < 0.05) {
             vid.volume = 0;
@@ -204,32 +203,29 @@ document.addEventListener('keydown', function(event) {
 
     // Increase speed with '.'
     if(event.keyCode == 190) {
-        event.preventDefault();
         vid.playbackRate = vid.playbackRate + 0.25;
         if (vid.playbackRate > 3) {
             vid.playbackRate = 3;
         }
         intended_speed = vid.playbackRate;
-        show_popup("fast_forward", vid.playbackRate);
+        show_popup("fast_forward", vid.playbackRate + "x");
     }
 
     // Decrease speed with ','
     if(event.keyCode == 188) {
-        event.preventDefault();
         vid.playbackRate = vid.playbackRate - 0.25;
         if (vid.playbackRate < 0.25) {
             vid.playbackRate = 0.25;
         }
         intended_speed = vid.playbackRate;
-        show_popup("fast_rewind", vid.playbackRate);
+        show_popup("fast_rewind", vid.playbackRate + "x");
     }
 
     // Reset speed with '/'
     if(event.keyCode == 191) {
-        event.preventDefault();
         vid.playbackRate = 1;
         intended_speed = vid.playbackRate;
-        show_popup("speed", "Speed Reset");
+        show_popup("speed", "1x");
     }
 
     // Mute/unmute with 'm'

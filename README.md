@@ -30,7 +30,7 @@ Available on the [Chrome Web Store](https://chrome.google.com/webstore/detail/uo
 ### Firefox
 This is not available on [Mozilla Addons](https://addons.mozilla.org) at this time, due to Mozilla's Policies. However, we do fully support Firefox. You can simply install it by clicking the image below. Don't worry, it will still automatically update!
 
-[![Firefox Badge](https://github.com/acoollevel/uoa-mediaplayer-plus/raw/master/assets/firefox-badge.png "Download Firefox Addon")](https://github.com/acoollevel/uoa-mediaplayer-plus/releases/download/0.2.1/uoa_mediaplayerplus-0.2.1-fx.xpi)
+[![Firefox Badge](https://github.com/acoollevel/uoa-mediaplayer-plus/raw/master/assets/firefox-badge.png "Download Firefox Addon")](https://github.com/acoollevel/uoa-mediaplayer-plus/releases/download/0.3.1/uoa_mediaplayerplus-0.3.1-fx.xpi)
 
 _If for some reason you cannot install it using the button above, you can install it by clicking the .xpi file under the latest release here: [Releases](https://github.com/acoollevel/uoa-mediaplayer-plus/releases)_
 

@@ -21,7 +21,7 @@
         <span class="name">UoA MediaplayerPlus</span>
       </a>
       {% for item in site.data.navigation %}
-        <a class="link" href="{{ site.baseurl }}/{{ item.link }}" {% if page.url == item.link %}style="font-weight: bold;"{% endif %}>
+        <a class="link" href="{{ site.baseurl }}{{ item.link }}" {% if page.url == item.link %}style="font-weight: bold;"{% endif %}>
           {{ item.name }}
         </a>
       {% endfor %}
