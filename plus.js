@@ -208,7 +208,7 @@ document.addEventListener('keydown', function(event) {
             vid.playbackRate = 3;
         }
         intended_speed = vid.playbackRate;
-        show_popup("fast_forward", vid.playbackRate);
+        show_popup("fast_forward", vid.playbackRate + "x");
     }
 
     // Decrease speed with ','
@@ -218,14 +218,14 @@ document.addEventListener('keydown', function(event) {
             vid.playbackRate = 0.25;
         }
         intended_speed = vid.playbackRate;
-        show_popup("fast_rewind", vid.playbackRate);
+        show_popup("fast_rewind", vid.playbackRate + "x");
     }
 
     // Reset speed with '/'
     if(event.keyCode == 191) {
         vid.playbackRate = 1;
         intended_speed = vid.playbackRate;
-        show_popup("speed", "Speed Reset");
+        show_popup("speed", "1x");
     }
 
     // Mute/unmute with 'm'
