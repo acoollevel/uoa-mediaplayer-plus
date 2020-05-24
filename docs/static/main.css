@@ -125,7 +125,7 @@ footer p, footer p a {
 footer .icon {
     width: 30px;
     height: 30px;
-    margin-right: 50px;
+    margin: 0 25px;
 }
 
 button .icon {
