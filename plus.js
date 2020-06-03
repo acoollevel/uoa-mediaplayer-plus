@@ -77,7 +77,7 @@ document.arrive(".shaka-volume-bar-container", function() {
 
         // action info popup
         action_popup = "<div id='mpp-action-popup'></div>";
-        document.getElementsByClassName("ion-page")[0].insertAdjacentHTML("afterbegin", action_popup);
+        document.getElementsByClassName("shaka-video-container")[0].insertAdjacentHTML("afterbegin", action_popup);
         popup = document.getElementById("mpp-action-popup");
 
         // download button
