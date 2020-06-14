@@ -2,7 +2,7 @@
 
     "manifest_version": 2,
     "name": "UoA MediaplayerPlus",
-    "version": "0.3.1",
+    "version": "0.3.2",
   
     "description": "Unofficial improvements to the UoA mediaplayer.",
     "icons": {
