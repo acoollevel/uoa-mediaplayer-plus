@@ -12,4 +12,5 @@ function saveSettings() {
     chrome.storage.sync.set({[video_id]: video_data});
     this.console.log(settings);
     chrome.storage.sync.set({"settings": settings});
+    saveSettingsTimeout = setTimeout(saveSettings, 10000); // reset countdown
 }
