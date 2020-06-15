@@ -24,12 +24,10 @@ chrome.storage.sync.get([video_id, "settings"], function(result) {
     console.log(settings);
 });
 
+// every 10 seconds, save current progress
+saveSettingsTimeout = setTimeout(saveSettings, 10000);
 // before the user leaves, save settings
-window.onbeforeunload = function(){
-    chrome.storage.sync.set({[video_id]: video_data});
-    this.console.log(settings);
-    chrome.storage.sync.set({"settings": settings});
-};
+window.onbeforeunload = saveSettings;
 
 var popup_timeout;
 var popup;
