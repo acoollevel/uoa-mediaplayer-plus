@@ -13,8 +13,15 @@ var video_data = {
     position: 42, // default start position, skips copyright message
 }
 
+// get mediaplayer in use
+var player_id_reg = /(?:\/\/)([^.]+)/;
+var player_id = player_id_reg.exec(window.location.href)[1];
+console.log("Player id value is: " + player_id);
+
 // get unique video id
-var video_id = window.location.href.replace(".preview", "").replace("https://mediaplayer.auckland.ac.nz", "");
+var video_id_reg = /(?:ac\.nz)(.+?(?=\.preview))/;
+var video_id = video_id_reg.exec(window.location.href)[1];
+console.log("Video id value is: " + video_id);
 
 // load video data from local storage
 chrome.storage.sync.get([video_id, "settings"], function(result) {
