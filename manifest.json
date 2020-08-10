@@ -18,6 +18,11 @@
       "storage"
     ],
 
+    "browser_action": {
+      "default_title": "UoA MediaplayerPlus",
+      "default_popup": "popup/index.html"
+    },
+
     "browser_specific_settings": {
       "gecko": {
         "id": "{cceae834-2b2c-4073-adc2-15246d1bf2ed}",
