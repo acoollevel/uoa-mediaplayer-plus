@@ -162,32 +162,13 @@ document.arrive(".shaka-volume-bar-container", function() {
         // play/pause button
         play_button = "<button class='material-icons' id='mpp-play' aria-label='Play/Pause' title='Play/Pause'>play_arrow</button>";
         document.getElementsByClassName("shaka-current-time")[0].insertAdjacentHTML("beforebegin", play_button);
-
-         // Workaround to stop the spacebar "clicking" as a generic keyevent causing a double play/pause
-         // Based on: https://stackoverflow.com/a/27891665
-        (function () {
-            var mpp_play = document.getElementById("mpp-play");
-
-            function handleClick(event) {
-                event.preventDefault();
-               
-            if(event.keyCode === 32){
-                console.log("Preventing double keypress");
-                return;
+        document.getElementById("mpp-play").addEventListener('click', function() {
+            if (vid.paused) {
+                vid.play();
             } else {
-                if (vid.paused) {
-                        vid.play();
-                    } else {
-                        vid.pause();
-                    }
-                }
+                vid.pause();
             }
-            mpp_play.addEventListener('click', handleClick, true);
-            mpp_play.addEventListener('keyup', handleClick, true);
-            console.log("Registered play/pause button");
-        })();
-        
-
+        });
 
         // volume button
         volume_button = "<button class='material-icons' id='mpp-volume' aria-label='Toggle Sound' title='Toggle Sound'>volume_up</button>"
