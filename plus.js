@@ -96,8 +96,9 @@ document.addEventListener("visibilitychange", function() {
     popup.classList.remove("show-action-popup");
 });
 
+
 document.arrive(".shaka-volume-bar-container", function() {
-    if (!loaded) {
+    if (!loaded && player_id == "mediaplayer") {
         loaded = true;
         console.log("Loaded!");
 
@@ -212,6 +213,7 @@ document.arrive(".shaka-volume-bar-container", function() {
 });
 
 // Keybindings
+if(player_id == "mediaplayer"){
 document.addEventListener('keydown', function(event) {
 
     // prevent unexpected browser behaviour
@@ -308,3 +310,4 @@ document.addEventListener('keydown', function(event) {
         }
     }
 });
+}
