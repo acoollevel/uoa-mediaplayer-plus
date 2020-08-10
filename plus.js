@@ -13,8 +13,15 @@ var video_data = {
     position: 42, // default start position, skips copyright message
 }
 
+// get mediaplayer in use
+var player_id_reg = /(?:\/\/)([^.]+)/;
+var player_id = player_id_reg.exec(window.location.href)[1];
+console.log("Player id value is: " + player_id);
+
 // get unique video id
-var video_id = window.location.href.replace(".preview", "").replace("https://mediaplayer.auckland.ac.nz", "");
+var video_id_reg = /(?:ac\.nz)(.+?(?=\.preview))/;
+var video_id = video_id_reg.exec(window.location.href)[1];
+console.log("Video id value is: " + video_id);
 
 // load video data from local storage
 chrome.storage.sync.get([video_id, "settings"], function(result) {
@@ -28,6 +35,51 @@ chrome.storage.sync.get([video_id, "settings"], function(result) {
 saveSettingsTimeout = setTimeout(saveSettings, 10000);
 // before the user leaves, save settings
 window.onbeforeunload = saveSettings;
+
+
+function offerRedirect(urlToSet){
+    console.log("Offering redirect");
+    console.log(`Redirect to: ${urlToSet}`);
+    redirect_modal = `<div class="askRedirect"><div class="askHeader"><span class="goodNews">Good News!</span></div><div class="askBody"><p>This video may work with Mediaplayer.\r\nWould you like to try it?</p><button onclick="window.location.href = '${urlToSet}'">Try Mediaplayer!</button></div></div>`;
+    document.getElementsByClassName('container')[0].insertAdjacentHTML('beforeend', redirect_modal);
+    console.log("Should have injected html");
+    console.log(document.getElementsByClassName('container')[0].children);
+}
+
+
+function check_redirect(event){
+    console.log("load event called");
+    console.log(this);
+    console.log(event);
+    if(this.status != 200){
+        console.log("Response of background check was: " + this.status);
+    } else {
+        console.log("Background checked returned 200");
+
+       // console.log("Doing Redirect");
+        urlToSet = window.location.href.replace("mediastore", "mediaplayer");
+
+        // TODO: Add in setting to allow the user to always attempt an automatic redirection
+
+        // Check if manual or automatic redirect
+
+        // if manual
+        offerRedirect(urlToSet);
+
+        // if automatic
+        // doRedirect();
+    }
+}
+
+if(player_id == "mediastore"){
+    console.log("Running background check");
+    url = "https://mediaplayer.auckland.ac.nz" + video_id + ".preview";
+    console.log(url);
+    check_req = new XMLHttpRequest();
+    check_req.addEventListener("load", check_redirect);
+    check_req.open('GET', url, true);
+    check_req.send();
+}
 
 var popup_timeout;
 var popup;
@@ -44,8 +96,9 @@ document.addEventListener("visibilitychange", function() {
     popup.classList.remove("show-action-popup");
 });
 
+
 document.arrive(".shaka-volume-bar-container", function() {
-    if (!loaded) {
+    if (!loaded && player_id == "mediaplayer") {
         loaded = true;
         console.log("Loaded!");
 
@@ -109,13 +162,32 @@ document.arrive(".shaka-volume-bar-container", function() {
         // play/pause button
         play_button = "<button class='material-icons' id='mpp-play' aria-label='Play/Pause' title='Play/Pause'>play_arrow</button>";
         document.getElementsByClassName("shaka-current-time")[0].insertAdjacentHTML("beforebegin", play_button);
-        document.getElementById("mpp-play").addEventListener('click', function() {
-            if (vid.paused) {
-                vid.play();
+
+         // Workaround to stop the spacebar "clicking" as a generic keyevent causing a double play/pause
+         // Based on: https://stackoverflow.com/a/27891665
+        (function () {
+            var mpp_play = document.getElementById("mpp-play");
+
+            function handleClick(event) {
+                event.preventDefault();
+               
+            if(event.keyCode === 32){
+                console.log("Preventing double keypress");
+                return;
             } else {
-                vid.pause();
+                if (vid.paused) {
+                        vid.play();
+                    } else {
+                        vid.pause();
+                    }
+                }
             }
-        });
+            mpp_play.addEventListener('click', handleClick, true);
+            mpp_play.addEventListener('keyup', handleClick, true);
+            console.log("Registered play/pause button");
+        })();
+        
+
 
         // volume button
         volume_button = "<button class='material-icons' id='mpp-volume' aria-label='Toggle Sound' title='Toggle Sound'>volume_up</button>"
@@ -141,99 +213,101 @@ document.arrive(".shaka-volume-bar-container", function() {
 });
 
 // Keybindings
-document.addEventListener('keydown', function(event) {
+if(player_id == "mediaplayer"){
+    document.addEventListener('keydown', function(event) {
 
-    // prevent unexpected browser behaviour
-    event.preventDefault();
-    document.activeElement.blur();
+        // prevent unexpected browser behaviour
+        event.preventDefault();
+        document.activeElement.blur();
 
-    try {
-        clearTimeout(timeout);
-    } catch {}
-    controls.setAttribute("shown", "true");
-    timeout = setTimeout(function(){ controls.removeAttribute("shown"); }, 1000);
+        try {
+            clearTimeout(timeout);
+        } catch {}
+        controls.setAttribute("shown", "true");
+        timeout = setTimeout(function(){ controls.removeAttribute("shown"); }, 1000);
 
-    // Pause with spacebar, 'k'
-    if(event.keyCode == 32 || event.keyCode == 75) {
-        if (vid.paused) {
-            vid.play();
-            show_popup("play_arrow", "Play");
-        } else {
-            vid.pause();
-            show_popup("pause", "Pause");
+        // Pause with spacebar, 'k'
+        if(event.keyCode == 32 || event.keyCode == 75) {
+            if (vid.paused) {
+                vid.play();
+                show_popup("play_arrow", "Play");
+            } else {
+                vid.pause();
+                show_popup("pause", "Pause");
+            }
         }
-    }
 
-    // Go fullscreen with 'f'
-    if(event.keyCode == 70) {
-        document.getElementsByClassName("shaka-fullscreen-button")[0].click();
-    }
-
-    // Seek forwards with '➡', 'l'
-    if(event.keyCode == 39 || event.keyCode == 76) {
-        vid.currentTime = vid.currentTime + 5;
-        show_popup("skip_next", "Seek");
-    }
-
-    // Seek backwards with '⬅', 'j'
-    if(event.keyCode == 37 || event.keyCode == 74) {
-        vid.currentTime = vid.currentTime - 5;
-        show_popup("skip_previous", "Seek");
-    }
-
-    // Volume up with '⬆'
-    if(event.keyCode == 38) {
-        vid.volume = vid.volume + 0.05;
-        if (vid.volume > 0.95) {
-            vid.volume = 1;
+        // Go fullscreen with 'f'
+        if(event.keyCode == 70) {
+            document.getElementsByClassName("shaka-fullscreen-button")[0].click();
         }
-        show_popup("volume_up", Math.round(vid.volume*100));
-    }
 
-    // Volume up with '⬇'
-    if(event.keyCode == 40) {
-        vid.volume = vid.volume - 0.05;
-        if (vid.volume < 0.05) {
-            vid.volume = 0;
+        // Seek forwards with '➡', 'l'
+        if(event.keyCode == 39 || event.keyCode == 76) {
+            vid.currentTime = vid.currentTime + 5;
+            show_popup("skip_next", "Seek");
         }
-        show_popup("volume_down", Math.round(vid.volume*100));
-    }
 
-    // Increase speed with '.'
-    if(event.keyCode == 190) {
-        vid.playbackRate = vid.playbackRate + 0.25;
-        if (vid.playbackRate > 3) {
-            vid.playbackRate = 3;
+        // Seek backwards with '⬅', 'j'
+        if(event.keyCode == 37 || event.keyCode == 74) {
+            vid.currentTime = vid.currentTime - 5;
+            show_popup("skip_previous", "Seek");
         }
-        intended_speed = vid.playbackRate;
-        show_popup("fast_forward", vid.playbackRate + "x");
-    }
 
-    // Decrease speed with ','
-    if(event.keyCode == 188) {
-        vid.playbackRate = vid.playbackRate - 0.25;
-        if (vid.playbackRate < 0.25) {
-            vid.playbackRate = 0.25;
+        // Volume up with '⬆'
+        if(event.keyCode == 38) {
+            vid.volume = vid.volume + 0.05;
+            if (vid.volume > 0.95) {
+                vid.volume = 1;
+            }
+            show_popup("volume_up", Math.round(vid.volume*100));
         }
-        intended_speed = vid.playbackRate;
-        show_popup("fast_rewind", vid.playbackRate + "x");
-    }
 
-    // Reset speed with '/'
-    if(event.keyCode == 191) {
-        vid.playbackRate = 1;
-        intended_speed = vid.playbackRate;
-        show_popup("speed", "1x");
-    }
-
-    // Mute/unmute with 'm'
-    if(event.keyCode == 77) {
-        if (vid.muted) {
-            vid.muted = false;
-            show_popup("volume_up", "Unmuted");
-        } else {
-            vid.muted = true;
-            show_popup("volume_off", "Muted");
+        // Volume up with '⬇'
+        if(event.keyCode == 40) {
+            vid.volume = vid.volume - 0.05;
+            if (vid.volume < 0.05) {
+                vid.volume = 0;
+            }
+            show_popup("volume_down", Math.round(vid.volume*100));
         }
-    }
-});
+
+        // Increase speed with '.'
+        if(event.keyCode == 190) {
+            vid.playbackRate = vid.playbackRate + 0.25;
+            if (vid.playbackRate > 3) {
+                vid.playbackRate = 3;
+            }
+            intended_speed = vid.playbackRate;
+            show_popup("fast_forward", vid.playbackRate + "x");
+        }
+
+        // Decrease speed with ','
+        if(event.keyCode == 188) {
+            vid.playbackRate = vid.playbackRate - 0.25;
+            if (vid.playbackRate < 0.25) {
+                vid.playbackRate = 0.25;
+            }
+            intended_speed = vid.playbackRate;
+            show_popup("fast_rewind", vid.playbackRate + "x");
+        }
+
+        // Reset speed with '/'
+        if(event.keyCode == 191) {
+            vid.playbackRate = 1;
+            intended_speed = vid.playbackRate;
+            show_popup("speed", "1x");
+        }
+
+        // Mute/unmute with 'm'
+        if(event.keyCode == 77) {
+            if (vid.muted) {
+                vid.muted = false;
+                show_popup("volume_up", "Unmuted");
+            } else {
+                vid.muted = true;
+                show_popup("volume_off", "Muted");
+            }
+        }
+    });
+}
