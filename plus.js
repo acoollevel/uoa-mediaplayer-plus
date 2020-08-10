@@ -81,9 +81,17 @@ document.arrive(".shaka-volume-bar-container", function() {
         // download button
         download_button = "<button class='material-icons' id='mpp-download' aria-label='Download' title='Download'>get_app</button>"
         vol_slider.insertAdjacentHTML("afterend", download_button);
+
+        // TODO: Add in ability for user to click up arrow to download the desired resolution?
+        // Does the list of resolutions on offer to download need to check what is actually available for download in the mpd file?
+        // Otherwise default to their preferred resolution in their settings?
+
+        var downloadResReplacements = {"HD": "-slides.m4v", "SD": ".m4v", "LOW": "mp4", "AUDIO": ".m4a"}
+
+        // TODO: Add in the ability to change the download link to the required url "terminator" for the desired quality
         document.getElementById("mpp-download").addEventListener('click', function() {
             url_string = window.location.href;
-            url_string = url_string.replace('.preview', '.mp4');
+            url_string = url_string.replace('.preview', downloadResReplacements["HD"]);
             window.open(url_string,'_blank');
         });
 
