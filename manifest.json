@@ -15,7 +15,13 @@
     },
 
     "permissions": [
-      "storage"
+      "storage",
+      "tabs",
+      "webRequest",
+      "webRequestBlocking",
+      "*://mediastore.auckland.ac.nz/*",
+      "*://mediaplayer.auckland.ac.nz/*",
+      "activeTab"
     ],
 
     "browser_action": {
@@ -32,7 +38,7 @@
   
     "content_scripts": [
       {
-        "matches": ["*://mediaplayer.auckland.ac.nz/*"],
+        "matches": ["*://mediaplayer.auckland.ac.nz/*","*://mediastore.auckland.ac.nz/*"],
         "js": ["arrive.min.js", "utils.js", "plus.js"],
         "css" : ["plus.css"]
       }
