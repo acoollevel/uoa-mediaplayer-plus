@@ -36,6 +36,51 @@ saveSettingsTimeout = setTimeout(saveSettings, 10000);
 // before the user leaves, save settings
 window.onbeforeunload = saveSettings;
 
+
+function offerRedirect(urlToSet){
+    console.log("Offering redirect");
+    console.log(`Redirect to: ${urlToSet}`);
+    redirect_modal = `<div class="askRedirect"><div class="askHeader"><span class="goodNews">Good News!</span></div><div class="askBody"><p>This video may work with Mediaplayer.\r\nWould you like to try it?</p><button onclick="window.location.href = '${urlToSet}'">Try Mediaplayer!</button></div></div>`;
+    document.getElementsByClassName('container')[0].insertAdjacentHTML('beforeend', redirect_modal);
+    console.log("Should have injected html");
+    console.log(document.getElementsByClassName('container')[0].children);
+}
+
+
+function check_redirect(event){
+    console.log("load event called");
+    console.log(this);
+    console.log(event);
+    if(this.status != 200){
+        console.log("Response of background check was: " + this.status);
+    } else {
+        console.log("Background checked returned 200");
+
+       // console.log("Doing Redirect");
+        urlToSet = window.location.href.replace("mediastore", "mediaplayer");
+
+        // TODO: Add in setting to allow the user to always attempt an automatic redirection
+
+        // Check if manual or automatic redirect
+
+        // if manual
+        offerRedirect(urlToSet);
+
+        // if automatic
+        // doRedirect();
+    }
+}
+
+if(player_id == "mediastore"){
+    console.log("Running background check");
+    url = "https://mediaplayer.auckland.ac.nz" + video_id + ".preview";
+    console.log(url);
+    check_req = new XMLHttpRequest();
+    check_req.addEventListener("load", check_redirect);
+    check_req.open('GET', url, true);
+    check_req.send();
+}
+
 var popup_timeout;
 var popup;
 function show_popup(icon, string) {
