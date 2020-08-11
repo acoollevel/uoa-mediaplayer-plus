@@ -15,7 +15,8 @@
     },
 
     "permissions": [
-      "storage"
+      "storage",
+      "*://mediaplayer.auckland.ac.nz/*"
     ],
 
     "browser_action": {
