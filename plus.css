@@ -73,21 +73,3 @@
     top: -7px;
     font-family: Roboto-Regular,Roboto,sans-serif;
 }
-
-.askRedirect {
-    z-index: 50;
-    margin: 0;
-    position: top;
-    background-color: aquamarine;
-}
-
-.askHeader {
-    padding: 2px 2px;
-    background-color: green;
-    color: white;
-}
-
-.goodNews {
-    font-size: 15;
-    color: #000;
-}
