@@ -14,7 +14,9 @@ var video_data = {
 }
 
 // get unique video id
-var video_id = window.location.href.replace(".preview", "").replace("https://mediaplayer.auckland.ac.nz", "");
+var video_id_reg = /(?:ac\.nz)(.+?(?=\.preview))/;
+var video_id = video_id_reg.exec(window.location.href)[1];
+console.log("Video id value is: " + video_id);
 
 // load video data from local storage
 chrome.storage.sync.get([video_id, "settings"], function(result) {
@@ -43,6 +45,7 @@ document.addEventListener("visibilitychange", function() {
     // make sure popup is hidden
     popup.classList.remove("show-action-popup");
 });
+
 
 document.arrive(".shaka-volume-bar-container", function() {
     if (!loaded) {
@@ -117,32 +120,13 @@ document.arrive(".shaka-volume-bar-container", function() {
         // play/pause button
         play_button = "<button class='material-icons' id='mpp-play' aria-label='Play/Pause' title='Play/Pause'>play_arrow</button>";
         document.getElementsByClassName("shaka-current-time")[0].insertAdjacentHTML("beforebegin", play_button);
-
-         // Workaround to stop the spacebar "clicking" as a generic keyevent causing a double play/pause
-         // Based on: https://stackoverflow.com/a/27891665
-        (function () {
-            var mpp_play = document.getElementById("mpp-play");
-
-            function handleClick(event) {
-                event.preventDefault();
-               
-            if(event.keyCode === 32){
-                console.log("Preventing double keypress");
-                return;
+        document.getElementById("mpp-play").addEventListener('click', function() {
+            if (vid.paused) {
+                vid.play();
             } else {
-                if (vid.paused) {
-                        vid.play();
-                    } else {
-                        vid.pause();
-                    }
-                }
+                vid.pause();
             }
-            mpp_play.addEventListener('click', handleClick, true);
-            mpp_play.addEventListener('keyup', handleClick, true);
-            console.log("Registered play/pause button");
-        })();
-        
-
+        });
 
         // volume button
         volume_button = "<button class='material-icons' id='mpp-volume' aria-label='Toggle Sound' title='Toggle Sound'>volume_up</button>"
@@ -168,99 +152,101 @@ document.arrive(".shaka-volume-bar-container", function() {
 });
 
 // Keybindings
-document.addEventListener('keydown', function(event) {
+if(player_id == "mediaplayer"){
+    document.addEventListener('keydown', function(event) {
 
-    // prevent unexpected browser behaviour
-    event.preventDefault();
-    document.activeElement.blur();
+        // prevent unexpected browser behaviour
+        event.preventDefault();
+        document.activeElement.blur();
 
-    try {
-        clearTimeout(timeout);
-    } catch {}
-    controls.setAttribute("shown", "true");
-    timeout = setTimeout(function(){ controls.removeAttribute("shown"); }, 1000);
+        try {
+            clearTimeout(timeout);
+        } catch {}
+        controls.setAttribute("shown", "true");
+        timeout = setTimeout(function(){ controls.removeAttribute("shown"); }, 1000);
 
-    // Pause with spacebar, 'k'
-    if(event.keyCode == 32 || event.keyCode == 75) {
-        if (vid.paused) {
-            vid.play();
-            show_popup("play_arrow", "Play");
-        } else {
-            vid.pause();
-            show_popup("pause", "Pause");
+        // Pause with spacebar, 'k'
+        if(event.keyCode == 32 || event.keyCode == 75) {
+            if (vid.paused) {
+                vid.play();
+                show_popup("play_arrow", "Play");
+            } else {
+                vid.pause();
+                show_popup("pause", "Pause");
+            }
         }
-    }
 
-    // Go fullscreen with 'f'
-    if(event.keyCode == 70) {
-        document.getElementsByClassName("shaka-fullscreen-button")[0].click();
-    }
-
-    // Seek forwards with '➡', 'l'
-    if(event.keyCode == 39 || event.keyCode == 76) {
-        vid.currentTime = vid.currentTime + 5;
-        show_popup("skip_next", "Seek");
-    }
-
-    // Seek backwards with '⬅', 'j'
-    if(event.keyCode == 37 || event.keyCode == 74) {
-        vid.currentTime = vid.currentTime - 5;
-        show_popup("skip_previous", "Seek");
-    }
-
-    // Volume up with '⬆'
-    if(event.keyCode == 38) {
-        vid.volume = vid.volume + 0.05;
-        if (vid.volume > 0.95) {
-            vid.volume = 1;
+        // Go fullscreen with 'f'
+        if(event.keyCode == 70) {
+            document.getElementsByClassName("shaka-fullscreen-button")[0].click();
         }
-        show_popup("volume_up", Math.round(vid.volume*100));
-    }
 
-    // Volume up with '⬇'
-    if(event.keyCode == 40) {
-        vid.volume = vid.volume - 0.05;
-        if (vid.volume < 0.05) {
-            vid.volume = 0;
+        // Seek forwards with '➡', 'l'
+        if(event.keyCode == 39 || event.keyCode == 76) {
+            vid.currentTime = vid.currentTime + 5;
+            show_popup("skip_next", "Seek");
         }
-        show_popup("volume_down", Math.round(vid.volume*100));
-    }
 
-    // Increase speed with '.'
-    if(event.keyCode == 190) {
-        vid.playbackRate = vid.playbackRate + 0.25;
-        if (vid.playbackRate > 3) {
-            vid.playbackRate = 3;
+        // Seek backwards with '⬅', 'j'
+        if(event.keyCode == 37 || event.keyCode == 74) {
+            vid.currentTime = vid.currentTime - 5;
+            show_popup("skip_previous", "Seek");
         }
-        intended_speed = vid.playbackRate;
-        show_popup("fast_forward", vid.playbackRate + "x");
-    }
 
-    // Decrease speed with ','
-    if(event.keyCode == 188) {
-        vid.playbackRate = vid.playbackRate - 0.25;
-        if (vid.playbackRate < 0.25) {
-            vid.playbackRate = 0.25;
+        // Volume up with '⬆'
+        if(event.keyCode == 38) {
+            vid.volume = vid.volume + 0.05;
+            if (vid.volume > 0.95) {
+                vid.volume = 1;
+            }
+            show_popup("volume_up", Math.round(vid.volume*100));
         }
-        intended_speed = vid.playbackRate;
-        show_popup("fast_rewind", vid.playbackRate + "x");
-    }
 
-    // Reset speed with '/'
-    if(event.keyCode == 191) {
-        vid.playbackRate = 1;
-        intended_speed = vid.playbackRate;
-        show_popup("speed", "1x");
-    }
-
-    // Mute/unmute with 'm'
-    if(event.keyCode == 77) {
-        if (vid.muted) {
-            vid.muted = false;
-            show_popup("volume_up", "Unmuted");
-        } else {
-            vid.muted = true;
-            show_popup("volume_off", "Muted");
+        // Volume up with '⬇'
+        if(event.keyCode == 40) {
+            vid.volume = vid.volume - 0.05;
+            if (vid.volume < 0.05) {
+                vid.volume = 0;
+            }
+            show_popup("volume_down", Math.round(vid.volume*100));
         }
-    }
-});
+
+        // Increase speed with '.'
+        if(event.keyCode == 190) {
+            vid.playbackRate = vid.playbackRate + 0.25;
+            if (vid.playbackRate > 3) {
+                vid.playbackRate = 3;
+            }
+            intended_speed = vid.playbackRate;
+            show_popup("fast_forward", vid.playbackRate + "x");
+        }
+
+        // Decrease speed with ','
+        if(event.keyCode == 188) {
+            vid.playbackRate = vid.playbackRate - 0.25;
+            if (vid.playbackRate < 0.25) {
+                vid.playbackRate = 0.25;
+            }
+            intended_speed = vid.playbackRate;
+            show_popup("fast_rewind", vid.playbackRate + "x");
+        }
+
+        // Reset speed with '/'
+        if(event.keyCode == 191) {
+            vid.playbackRate = 1;
+            intended_speed = vid.playbackRate;
+            show_popup("speed", "1x");
+        }
+
+        // Mute/unmute with 'm'
+        if(event.keyCode == 77) {
+            if (vid.muted) {
+                vid.muted = false;
+                show_popup("volume_up", "Unmuted");
+            } else {
+                vid.muted = true;
+                show_popup("volume_off", "Muted");
+            }
+        }
+    });
+}
