@@ -6,3 +6,20 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     menu.open();
 });
+
+var settings;
+loadGlobalSettings(function(returned){
+    settings=returned;
+
+    for (setting in settings) {
+        console.log(setting)
+        try {
+            control = document.getElementById(setting);
+            control.checked = settings.setting;
+            control.addEventListener('change', function() {
+                settings.setting = this.checked;
+                saveGlobalSettings(settings);
+            });
+        } catch {}
+    }
+});

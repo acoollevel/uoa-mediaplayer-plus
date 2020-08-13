@@ -3,33 +3,16 @@ var controls;
 var loaded = false;
 var intended_speed = 1;
 
-// declare default values for settings
-var settings = {
-    volume: 1,
-}
-
-// declare default values for video data
-var video_data = {
-    position: 42, // default start position, skips copyright message
-}
+var settings;
+loadGlobalSettings(function(returned){settings=returned;});
 
 // get unique video id
 var video_id_reg = /(?:ac\.nz)(.+?(?=\.preview))/;
 var video_id = video_id_reg.exec(window.location.href)[1];
 console.log("Video id value is: " + video_id);
 
-// load video data from local storage
-chrome.storage.sync.get([video_id, "settings"], function(result) {
-    console.log(result);
-    video_data = {...video_data, ...result[video_id]};
-    settings = {...settings, ...result["settings"]};
-    console.log(settings);
-});
-
-// every 10 seconds, save current progress
-saveSettingsTimeout = setTimeout(saveSettings, 10000);
-// before the user leaves, save settings
-window.onbeforeunload = saveSettings;
+var video_data;
+loadVideoSettings(video_id, function(returned){video_data=returned;});
 
 var popup_timeout;
 var popup;
@@ -62,18 +45,22 @@ document.arrive(".shaka-volume-bar-container", function() {
         });
         vid.addEventListener("timeupdate", function() {
             video_data.position = vid.currentTime;
+            saveVideoSettings(video_data);
         });
         vid.addEventListener("volumechange", function() {
             settings.volume = vid.volume;
             if (vid.muted) {
                 settings.volume = 0;
             }
+            saveGlobalSettings(settings)
         });
         controls = document.getElementsByClassName("shaka-controls-container")[0]
         vol_slider = document.getElementsByClassName("shaka-volume-bar-container")[0]
 
         // apply settings
         vid.currentTime = video_data.position;
+        console.log(vid.currentTime)
+        console.log(video_data)
         vid.volume = settings.volume;
 
         // action info popup
