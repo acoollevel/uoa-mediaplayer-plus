@@ -35,14 +35,14 @@ a i {
     color: white;
 }
 
-.slide-menu li > a {
+.slide-menu li > a, .slide-menu label {
     padding: 10px;
     color: white;
     text-decoration: none;
     border-radius: 2px;
 }
 
-.slide-menu li > a:hover {
+.slide-menu li > a:hover, .slide-menu label:hover {
     background-color: #313131;
 }
 
@@ -53,4 +53,13 @@ a i {
 .slide-menu__backlink {
     font-weight: bold;
     margin-bottom: 20px;
+}
+
+input[type="checkbox"] {
+    float: right;
+}
+
+input[type="url"] {
+    width: 100%;
+    height: 20px;
 }

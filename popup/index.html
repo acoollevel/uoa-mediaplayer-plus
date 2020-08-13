@@ -10,6 +10,7 @@
 
         <link rel="stylesheet" type="text/css" href="font-awesome/css/all.min.css">
 
+        <script src="../utils.js"></script>
         <script src="popup.js"></script>
         <link rel="stylesheet" type="text/css" href="styles.css">
     </head>
@@ -24,6 +25,20 @@
                 <ul>
                     <button id="testButton">Testing Play</button>
                     <button id="testButtonTwo">Testing Stop</button>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Online Features</a>
+                <ul>
+                    <li><label>Enable Online Features<input id="online" type="checkbox" value=""></label></li>
+                    <li><a id="server-link" target="_blank" rel="noopener noreferrer">Login to Online Services</a></li>
+                    <li>
+                        <a href="#">Server</a>
+                        <ul>
+                        <p>This is the domain name of the server you want to connect to. The official server of this project is at tct.pythonanywhere.com. You can also enter localhost:8000 if you're running the server on your own machine.</p>
+                        <li><input id="server" type="url" placeholder="tct.pythonanywhere.com (for example)"></input></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
             <li>
@@ -59,6 +74,12 @@
                     <p>Developed by acoollevel & contributors</p>
                 </ul>
             </li>
+            <div id="review">
+                <h1>Spread the word</h1>
+                <p>If this extension has helped you in any way, please consider leaving a review or sharing it with your friends</p>
+                <li><a href="https://chrome.google.com/webstore/detail/uoa-mediaplayerplus/oohpedaigajmdamiaboobdjijopldlkd/reviews" target="_blank" rel="noopener noreferrer">Review on Chrome Web Store</a></li>
+                <li><a href="https://acoollevel.github.io/uoa-mediaplayer-plus/" target="_blank" rel="noopener noreferrer">Share Website Link</a></li>
+            </div>
         </ul>
         </nav>
     </body>

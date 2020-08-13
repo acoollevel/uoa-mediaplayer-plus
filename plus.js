@@ -3,33 +3,16 @@ var controls;
 var loaded = false;
 var intended_speed = 1;
 
-// declare default values for settings
-var settings = {
-    volume: 1,
-}
-
-// declare default values for video data
-var video_data = {
-    position: 42, // default start position, skips copyright message
-}
+var settings;
+loadGlobalSettings(function(returned){settings=returned;});
 
 // get unique video id
 var video_id_reg = /(?:ac\.nz)(.+?(?=\.preview))/;
 var video_id = video_id_reg.exec(window.location.href)[1];
 console.log("Video id value is: " + video_id);
 
-// load video data from local storage
-chrome.storage.sync.get([video_id, "settings"], function(result) {
-    console.log(result);
-    video_data = {...video_data, ...result[video_id]};
-    settings = {...settings, ...result["settings"]};
-    console.log(settings);
-});
-
-// every 10 seconds, save current progress
-saveSettingsTimeout = setTimeout(saveSettings, 10000);
-// before the user leaves, save settings
-window.onbeforeunload = saveSettings;
+var video_data;
+loadVideoSettings(video_id, function(returned){video_data=returned;});
 
 var popup_timeout;
 var popup;
@@ -65,18 +48,22 @@ document.arrive(".shaka-volume-bar-container", function() {
         });
         vid.addEventListener("timeupdate", function() {
             video_data.position = vid.currentTime;
+            saveVideoSettings(video_data);
         });
         vid.addEventListener("volumechange", function() {
             settings.volume = vid.volume;
             if (vid.muted) {
                 settings.volume = 0;
             }
+            saveGlobalSettings(settings)
         });
         controls = document.getElementsByClassName("shaka-controls-container")[0]
         vol_slider = document.getElementsByClassName("shaka-volume-bar-container")[0]
 
         // apply settings
         vid.currentTime = video_data.position;
+        console.log(vid.currentTime)
+        console.log(video_data)
         vid.volume = settings.volume;
 
         // action info popup
@@ -156,102 +143,99 @@ document.arrive(".shaka-volume-bar-container", function() {
 });
 
 // Keybindings
-if(player_id == "mediaplayer"){
-    document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', function(event) {
 
-        // prevent unexpected browser behaviour
-        event.preventDefault();
-        document.activeElement.blur();
+    // prevent unexpected browser behaviour
+    event.preventDefault();
+    document.activeElement.blur();
 
-        try {
-            clearTimeout(timeout);
-        } catch {}
-        controls.setAttribute("shown", "true");
-        timeout = setTimeout(function(){ controls.removeAttribute("shown"); }, 1000);
+    try {
+        clearTimeout(timeout);
+    } catch {}
+    controls.setAttribute("shown", "true");
+    timeout = setTimeout(function(){ controls.removeAttribute("shown"); }, 1000);
 
-        // Pause with spacebar, 'k'
-        if(event.keyCode == 32 || event.keyCode == 75) {
-            if (vid.paused) {
-                extensionCalled = true;
-                vid.play();
-                show_popup("play_arrow", "Play");
-            } else {
-                vid.pause();
-                show_popup("pause", "Pause");
-            }
+    // Pause with spacebar, 'k'
+    if(event.keyCode == 32 || event.keyCode == 75) {
+        if (vid.paused) {
+            vid.play();
+            show_popup("play_arrow", "Play");
+        } else {
+            vid.pause();
+            show_popup("pause", "Pause");
         }
+    }
 
-        // Go fullscreen with 'f'
-        if(event.keyCode == 70) {
-            document.getElementsByClassName("shaka-fullscreen-button")[0].click();
-        }
+    // Go fullscreen with 'f'
+    if(event.keyCode == 70) {
+        document.getElementsByClassName("shaka-fullscreen-button")[0].click();
+    }
 
-        // Seek forwards with '➡', 'l'
-        if(event.keyCode == 39 || event.keyCode == 76) {
-            vid.currentTime = vid.currentTime + 5;
-            show_popup("skip_next", "Seek");
-        }
+    // Seek forwards with '➡', 'l'
+    if(event.keyCode == 39 || event.keyCode == 76) {
+        vid.currentTime = vid.currentTime + 5;
+        show_popup("skip_next", "Seek");
+    }
 
-        // Seek backwards with '⬅', 'j'
-        if(event.keyCode == 37 || event.keyCode == 74) {
-            vid.currentTime = vid.currentTime - 5;
-            show_popup("skip_previous", "Seek");
-        }
+    // Seek backwards with '⬅', 'j'
+    if(event.keyCode == 37 || event.keyCode == 74) {
+        vid.currentTime = vid.currentTime - 5;
+        show_popup("skip_previous", "Seek");
+    }
 
-        // Volume up with '⬆'
-        if(event.keyCode == 38) {
-            vid.volume = vid.volume + 0.05;
-            if (vid.volume > 0.95) {
-                vid.volume = 1;
-            }
-            show_popup("volume_up", Math.round(vid.volume*100));
+    // Volume up with '⬆'
+    if(event.keyCode == 38) {
+        vid.volume = vid.volume + 0.05;
+        if (vid.volume > 0.95) {
+            vid.volume = 1;
         }
+        show_popup("volume_up", Math.round(vid.volume*100));
+    }
 
-        // Volume up with '⬇'
-        if(event.keyCode == 40) {
-            vid.volume = vid.volume - 0.05;
-            if (vid.volume < 0.05) {
-                vid.volume = 0;
-            }
-            show_popup("volume_down", Math.round(vid.volume*100));
+    // Volume up with '⬇'
+    if(event.keyCode == 40) {
+        vid.volume = vid.volume - 0.05;
+        if (vid.volume < 0.05) {
+            vid.volume = 0;
         }
+        show_popup("volume_down", Math.round(vid.volume*100));
+    }
 
-        // Increase speed with '.'
-        if(event.keyCode == 190) {
-            vid.playbackRate = vid.playbackRate + 0.25;
-            if (vid.playbackRate > 3) {
-                vid.playbackRate = 3;
-            }
-            intended_speed = vid.playbackRate;
-            show_popup("fast_forward", vid.playbackRate + "x");
+    // Increase speed with '.'
+    if(event.keyCode == 190) {
+        vid.playbackRate = vid.playbackRate + 0.25;
+        if (vid.playbackRate > 3) {
+            vid.playbackRate = 3;
         }
+        intended_speed = vid.playbackRate;
+        show_popup("fast_forward", vid.playbackRate + "x");
+    }
 
-        // Decrease speed with ','
-        if(event.keyCode == 188) {
-            vid.playbackRate = vid.playbackRate - 0.25;
-            if (vid.playbackRate < 0.25) {
-                vid.playbackRate = 0.25;
-            }
-            intended_speed = vid.playbackRate;
-            show_popup("fast_rewind", vid.playbackRate + "x");
+    // Decrease speed with ','
+    if(event.keyCode == 188) {
+        vid.playbackRate = vid.playbackRate - 0.25;
+        if (vid.playbackRate < 0.25) {
+            vid.playbackRate = 0.25;
         }
+        intended_speed = vid.playbackRate;
+        show_popup("fast_rewind", vid.playbackRate + "x");
+    }
 
-        // Reset speed with '/'
-        if(event.keyCode == 191) {
-            vid.playbackRate = 1;
-            intended_speed = vid.playbackRate;
-            show_popup("speed", "1x");
-        }
+    // Reset speed with '/'
+    if(event.keyCode == 191) {
+        vid.playbackRate = 1;
+        intended_speed = vid.playbackRate;
+        show_popup("speed", "1x");
+    }
 
-        // Mute/unmute with 'm'
-        if(event.keyCode == 77) {
-            if (vid.muted) {
-                vid.muted = false;
-                show_popup("volume_up", "Unmuted");
-            } else {
-                vid.muted = true;
-                show_popup("volume_off", "Muted");
-            }
+    // Mute/unmute with 'm'
+    if(event.keyCode == 77) {
+        if (vid.muted) {
+            vid.muted = false;
+            show_popup("volume_up", "Unmuted");
+        } else {
+            vid.muted = true;
+            show_popup("volume_off", "Muted");
         }
-    });
-}
+    }
+});
