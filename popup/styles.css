@@ -1,5 +1,5 @@
 body {
-    padding: 30px;
+    padding: 15px;
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
     background-color: #242424;
@@ -7,8 +7,20 @@ body {
     min-height: 500px;
     overflow-x: hidden;
     font-size: 16px;
-    scrollbar-color: #313131 #242424 ;
+    scrollbar-color: #313131 #242424;
 }
+
+*::-webkit-scrollbar {
+    width: 8px;
+  }
+
+*::-webkit-scrollbar-track {
+    background: #242424;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #313131;
+}  
 
 h1 {
     color: lightblue;
@@ -31,7 +43,7 @@ a i {
 
 .slide-menu {
     position: relative;
-    height: 400px;
+    height: 450px;
     color: white;
 }
 
