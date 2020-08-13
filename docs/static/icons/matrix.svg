@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="matrix.svg"
+   id="svg22"
+   version="1.1"
+   viewBox="0 0 29 32"
+   height="32"
+   width="29">
+  <metadata
+     id="metadata28">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs26" />
+  <sodipodi:namedview
+     inkscape:current-layer="Page-1"
+     inkscape:window-maximized="1"
+     inkscape:window-y="-8"
+     inkscape:window-x="-8"
+     inkscape:cy="7.5002362"
+     inkscape:cx="3.5688095"
+     inkscape:zoom="15.16"
+     showgrid="false"
+     id="namedview24"
+     inkscape:window-height="1014"
+     inkscape:window-width="1920"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
+  <!-- Generator: Sketch 55 (78076) - https://sketchapp.com -->
+  <desc
+     id="desc4">Created with Sketch.</desc>
+  <g
+     style="fill:#000000"
+     fill-rule="evenodd"
+     fill="none"
+     stroke-width="1"
+     stroke="none"
+     id="Page-1">
+    <g
+       style="fill:#000000"
+       fill-rule="nonzero"
+       fill="#FFFFFF"
+       id="matrix-logo-white">
+      <polygon
+         style="fill:#000000"
+         points="0.094721871,31.981769 0.094721871,9.495549e-05 3.1294248,9.495549e-05 3.1294248,0.73220178 0.93631479,0.73220178 0.93631479,31.249567 3.1294248,31.249567 3.1294248,31.981769 "
+         id="Path" />
+      <path
+         style="fill:#000000"
+         id="path7"
+         d="m 9.3857143,10.406647 v 1.544356 h 0.0439 c 0.4113148,-0.587869 0.9067317,-1.04432 1.4871047,-1.367929 0.579994,-0.323038 1.244849,-0.485222 1.993711,-0.485222 0.719469,0 1.376833,0.140059 1.971523,0.419228 0.59488,0.279644 1.046587,0.772083 1.355025,1.478172 0.337548,-0.49994 0.796461,-0.941293 1.376834,-1.323679 0.579993,-0.382196 1.266561,-0.573721 2.059797,-0.573721 0.602181,0 1.159988,0.07369 1.674463,0.220771 0.513717,0.147086 0.95433,0.382386 1.321555,0.705899 0.366846,0.323799 0.653192,0.746635 0.859229,1.268321 0.205468,0.522635 0.308439,1.15105 0.308439,1.88667 v 7.633092 l -3.128382,-9.5e-5 v -6.464 c 0,-0.382196 -0.0146,-0.742551 -0.04409,-1.081068 -0.02968,-0.338041 -0.110082,-0.632024 -0.242257,-0.882421 -0.132269,-0.249828 -0.327117,-0.44857 -0.583786,-0.595751 -0.257048,-0.146516 -0.605973,-0.220487 -1.046492,-0.220487 -0.440518,0 -0.796744,0.08508 -1.068489,0.253626 -0.271934,0.169401 -0.484703,0.390173 -0.63878,0.661935 -0.154172,0.272427 -0.257048,0.581128 -0.308344,0.926956 -0.05167,0.345448 -0.07718,0.694884 -0.07718,1.047834 v 6.353471 h -3.128097 v -6.397626 c 0,-0.338231 -0.0077,-0.672949 -0.02181,-1.003679 -0.01498,-0.33111 -0.07718,-0.636202 -0.187547,-0.915846 -0.110177,-0.279169 -0.293837,-0.503644 -0.55079,-0.673045 -0.257048,-0.168545 -0.635177,-0.253626 -1.134482,-0.253626 -0.147061,0 -0.341625,0.03314 -0.583692,0.09951 -0.242351,0.06618 -0.477497,0.19143 -0.704962,0.374979 -0.227939,0.184024 -0.4223133,0.44876 -0.5838809,0.794113 -0.1616625,0.345828 -0.2423515,0.797816 -0.2423515,1.356629 v 6.618492 l -3.1280025,9.5e-5 V 10.406647 Z" />
+      <polygon
+         transform="translate(-45.954058)"
+         style="fill:#000000"
+         points="71.900727,0.73220178 71.900727,9.495549e-05 74.93562,9.495549e-05 74.93562,31.981769 71.900727,31.981769 71.900727,31.249567 74.093837,31.249567 74.093837,0.73220178 "
+         id="polygon18" />
+    </g>
+  </g>
+</svg>

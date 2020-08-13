@@ -29,7 +29,7 @@ document.addEventListener("visibilitychange", function() {
     popup.classList.remove("show-action-popup");
 });
 
-
+extensionCalled = false;
 document.arrive(".shaka-volume-bar-container", function() {
     if (!loaded) {
         loaded = true;
@@ -39,6 +39,9 @@ document.arrive(".shaka-volume-bar-container", function() {
         vid.addEventListener('play', function() {
             vid.playbackRate = intended_speed; // make sure playback speed is still correct
             document.getElementById("mpp-play").innerHTML = "pause" // update play icon
+            if(!extensionCalled){
+                vid.pause()
+            }
         });
         vid.addEventListener('pause', function() {
             document.getElementById("mpp-play").innerHTML = "play_arrow" // update play icon
@@ -109,6 +112,7 @@ document.arrive(".shaka-volume-bar-container", function() {
         document.getElementsByClassName("shaka-current-time")[0].insertAdjacentHTML("beforebegin", play_button);
         document.getElementById("mpp-play").addEventListener('click', function() {
             if (vid.paused) {
+                extensionCalled = true;
                 vid.play();
             } else {
                 vid.pause();
