@@ -3,7 +3,7 @@ urls:
   firefox: "https://github.com/acoollevel/uoa-mediaplayer-plus/releases/download/0.3.2/uoa_mediaplayerplus-0.3.2-fx.xpi"
   github: "https://github.com/acoollevel/uoa-mediaplayer-plus"
   discord: "https://discord.gg/sJbs6hu"
-  riot: "https://riot.im/app/#/room/!GVrLieYtoagUolQHhN:matrix.org?via=matrix.org"
+  matrix: "https://matrix.to/#/!GVrLieYtoagUolQHhN:matrix.org?via=matrix.org"
 
 collections:
   authors:
