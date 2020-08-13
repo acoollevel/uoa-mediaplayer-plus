@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
         backLinkBefore: '<i class="fas fa-arrow-left"></i> ',
     });
     menu.open();
-    var instance = OverlayScrollbars(menuElement); 
 });
 
 function sendMessagePlayer(stateSend) {
