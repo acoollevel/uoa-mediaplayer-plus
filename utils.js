@@ -13,6 +13,7 @@ function loadGlobalSettings(callback) {
     var settings = {
         volume: 1,
         online: false,
+        server: "tct.pythonanywhere.com"
     }
 
     // load settings data from local storage

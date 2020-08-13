@@ -11,15 +11,8 @@ Various improvements to the new UoA mediaplayer (mediaplayer.auckland.ac.nz).
   - '>' to speed up and '<' to slow down, '/' to reset speed
 - Automatically skips the copyright notice
 - Remember where you stopped watching
+- Online features which let you watch lectures together with your classmates
 - Various other fixes and improvements
-
-## Important Note
-
-This plugin **only** works with videos that are in the `mediaplayer.auckland.ac.nz` format not the `mediastore.auckland.ac.nz` one. If the plugin does not work on a video, check to see if the link is a `mediaplayer` one. If not, you can try to change `mediastore` to `mediaplayer` in the address bar, as this often works.
-
-We will be working on removing this limitation in the near future, so that the plugin will work with both `mediaplayer` and `mediastore` videos!
-
----
 
 ## Download
 
@@ -34,8 +27,6 @@ This is not available on [Mozilla Addons](https://addons.mozilla.org) at this ti
 [![Firefox Badge](https://github.com/acoollevel/uoa-mediaplayer-plus/raw/master/assets/firefox-badge.png "Download Firefox Addon")](https://github.com/acoollevel/uoa-mediaplayer-plus/releases/download/0.3.2/uoa_mediaplayerplus-0.3.2-fx.xpi)
 
 _If for some reason you cannot install it using the button above, you can install it by clicking the .xpi file under the latest release here: [Releases](https://github.com/acoollevel/uoa-mediaplayer-plus/releases)_
-
----
 
 ## Bugs & Suggestions
 
