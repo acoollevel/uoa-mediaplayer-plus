@@ -142,6 +142,15 @@ document.arrive(".shaka-volume-bar-container", function() {
     }
 });
 
+loadedButtons = false;
+document.arrive(".explicit-resolution", function() {
+    if(!loadedButtons){
+        loadedButtons = true;
+        console.log("Resolutions arrived");
+        setDefaultResolution();
+    }
+});
+
 // Keybindings
 document.addEventListener('keydown', function(event) {
 
