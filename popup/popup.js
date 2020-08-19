@@ -48,7 +48,6 @@ loadGlobalSettings(function(returned){
                 control.addEventListener('change', function() {
                     settings[this.id] = this.checked;
                     saveGlobalSettings(settings);
-                    updateOnlineEnabled();
                 });
             } else if (control.type == "url") {
                 control.value = settings[setting];
@@ -76,6 +75,7 @@ loadGlobalSettings(function(returned){
     }
 
     // update UI based on whether online mode is enabled
+    document.getElementById("online").addEventListener('change', updateOnlineEnabled);
     updateOnlineEnabled();
 
     document.getElementById("server-link").href = "http://" + settings.server;
