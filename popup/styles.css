@@ -48,6 +48,10 @@ a i {
     margin-right: 10px;
 }
 
+a:focus {
+    outline: none;
+}
+
 .slide-menu {
     position: relative;
     height: 450px;
