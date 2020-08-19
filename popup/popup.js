@@ -25,6 +25,24 @@ function sendMessagePlayer(stateSend) {
     });
 }
 
+
+function populateDefaultPlaybackResolution(element){
+    for(const opt of defaultPlaybackResolutions){
+        var radio = document.createElement("input");
+        var label = document.createElement("label");
+        radio.type = "radio";
+        radio.name = "defaultPlaybackRes"
+        radio.value = opt;
+        radio.class = "defaultResRadio"
+        label.setAttribute("for", opt);
+        label.innerHTML = opt;
+        label.className = "defaultResLabel";
+        element.append(label);
+        element.append(radio);
+    }
+}
+
+
 var settings;
 loadGlobalSettings(function(returned){
     settings=returned;
