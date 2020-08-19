@@ -57,7 +57,21 @@ loadGlobalSettings(function(returned){
                     console.log(settings)
                     saveGlobalSettings(settings);
                 });
-            }
+            } else if (control.type == "radioHolder"){
+                defaultValue = settings[setting];
+                radios = document.getElementById(setting).querySelectorAll(".radioHolderEntry");
+               for(const radio of radios){
+                   if(radio.value == defaultValue){
+                       radio.checked = true;
+                   }
+                   radio.addEventListener("click", function () {
+                    console.log(this.value);
+                    settings[this.name] = this.value;
+                    console.log(settings);
+                    saveGlobalSettings(settings);
+                   });
+               }
+            } 
         } catch {}
     }
 

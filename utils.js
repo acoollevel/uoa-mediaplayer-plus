@@ -8,17 +8,15 @@ function downloadURI(uri, name) {
     delete link;
 }
 
-// TODO - add user configurable way to select the default resolution
-var defaultResolution = "720p";
 function setDefaultResolution(){
     console.log("Called set resolution");
     resolutionButtons = document.getElementsByClassName("explicit-resolution");
     console.log("Should have the buttons?");
     console.log(resolutionButtons)
     for(const resButton of resolutionButtons){
-        if(resButton.firstChild.innerText == defaultResolution){
+        if(resButton.firstChild.innerText == settings.defaultPlaybackResolution){
             resButton.click();
-            console.log("Should have set default resolution to: " + defaultResolution);
+            console.log("Should have set default resolution to: " + settings,defaultPlaybackResolution);
             break;
         }
     }
@@ -29,7 +27,8 @@ function loadGlobalSettings(callback) {
     var settings = {
         volume: 1,
         online: false,
-        server: "tct.pythonanywhere.com"
+        server: "tct.pythonanywhere.com",
+        defaultPlaybackResolution: "Auto"
     }
 
     // load settings data from local storage
