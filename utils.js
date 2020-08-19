@@ -8,9 +8,6 @@ function downloadURI(uri, name) {
     delete link;
 }
 
-
-// TODO - add user configurable way to select the default resolution
-const defaultPlaybackResolutions = ["720p", "540p", "360p", "Auto"]
 function setDefaultResolution(){
     console.log("Called set resolution");
     resolutionButtons = document.getElementsByClassName("explicit-resolution");
