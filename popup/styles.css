@@ -10,6 +10,12 @@ body {
     scrollbar-color: #313131 #242424;
 }
 
+img {
+    width: 50%;
+    margin: auto;
+    display: block;
+}
+
 *::-webkit-scrollbar {
     width: 8px;
   }
@@ -39,6 +45,7 @@ iframe {
 
 a i {
     color: lightblue;
+    margin-right: 10px;
 }
 
 .slide-menu {

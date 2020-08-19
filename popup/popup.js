@@ -25,6 +25,16 @@ function sendMessagePlayer(stateSend) {
     });
 }
 
+function updateOnlineEnabled() {
+    if (settings.online) {
+        document.getElementById("online-on").style.display = "block";
+        document.getElementById("online-off").style.display = "none";
+    } else {
+        document.getElementById("online-off").style.display = "block";
+        document.getElementById("online-on").style.display = "none";
+    }
+}
+
 var settings;
 loadGlobalSettings(function(returned){
     settings=returned;
@@ -38,6 +48,7 @@ loadGlobalSettings(function(returned){
                 control.addEventListener('change', function() {
                     settings[this.id] = this.checked;
                     saveGlobalSettings(settings);
+                    updateOnlineEnabled();
                 });
             } else if (control.type == "url") {
                 control.value = settings[setting];
@@ -49,5 +60,9 @@ loadGlobalSettings(function(returned){
             }
         } catch {}
     }
+
+    // update UI based on whether online mode is enabled
+    updateOnlineEnabled();
+
     document.getElementById("server-link").href = "http://" + settings.server;
 });
