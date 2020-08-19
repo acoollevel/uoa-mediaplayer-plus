@@ -28,7 +28,7 @@ function loadGlobalSettings(callback) {
         volume: 1,
         online: false,
         server: "tct.pythonanywhere.com",
-        defaultPlaybackResolution: "720p"
+        defaultPlaybackResolution: "Auto"
     }
 
     // load settings data from local storage
