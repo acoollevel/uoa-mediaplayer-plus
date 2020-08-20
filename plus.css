@@ -55,11 +55,8 @@
     font-weight: bold;
     font-size: 39px;
     opacity: 0;
-    transition: opacity 0.05s;
-}
-
-.show-action-popup {
-    opacity: 1!important;
+    animation-name: fadeout;
+    animation-duration: 0.5s;
 }
 
 #mpp-action-popup .material-icons {
@@ -73,3 +70,34 @@
     top: -7px;
     font-family: Roboto-Regular,Roboto,sans-serif;
 }
+
+@keyframes fadeout {
+    from {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+  
+    to {
+      opacity: 0;
+    }
+  }
+
+  .shaka-range-container {
+      height: 7px!important;
+  }
+
+  .shaka-range-element {
+      height: 15px!important;
+  }
+
+  .shaka-range-element:hover {
+    cursor: pointer!important;
+  }
+
+  /* Tooltip material theme */
+  .tippy-box[data-theme~=material]{background-color:#505355;font-weight:600}.tippy-box[data-theme~=material][data-placement^=top]>.tippy-arrow:before{border-top-color:#505355}.tippy-box[data-theme~=material][data-placement^=bottom]>.tippy-arrow:before{border-bottom-color:#505355}.tippy-box[data-theme~=material][data-placement^=left]>.tippy-arrow:before{border-left-color:#505355}.tippy-box[data-theme~=material][data-placement^=right]>.tippy-arrow:before{border-right-color:#505355}.tippy-box[data-theme~=material]>.tippy-backdrop{background-color:#505355}.tippy-box[data-theme~=material]>.tippy-svg-arrow{fill:#505355}
+  /* Tooltip scale animation */
+  .tippy-box[data-animation=scale][data-placement^=top]{transform-origin:bottom}.tippy-box[data-animation=scale][data-placement^=bottom]{transform-origin:top}.tippy-box[data-animation=scale][data-placement^=left]{transform-origin:right}.tippy-box[data-animation=scale][data-placement^=right]{transform-origin:left}.tippy-box[data-animation=scale][data-state=hidden]{transform:scale(.5);opacity:0}

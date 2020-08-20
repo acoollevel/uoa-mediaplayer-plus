@@ -6,6 +6,14 @@ var intended_speed = 1;
 var settings;
 loadGlobalSettings(function(returned){settings=returned;});
 
+// initialize tooltip library
+tippy.setDefaultProps({
+    theme: 'material',
+    animation: 'scale',
+    duration: [100, 80],
+    arrow: false,
+});
+
 // get unique video id
 var video_id_reg = /(?:ac\.nz)(.+?(?=\.preview))/;
 var video_id = video_id_reg.exec(window.location.href)[1];
@@ -14,34 +22,42 @@ console.log("Video id value is: " + video_id);
 var video_data;
 loadVideoSettings(video_id, function(returned){video_data=returned;});
 
-var popup_timeout;
-var popup;
 function show_popup(icon, string) {
-    popup.innerHTML = "<span class='material-icons'>" + icon + "</span><p>" + string + "</p>";
-    popup.classList.add("show-action-popup");
-    try {
-        clearTimeout(popup_timeout);
-    } catch {}
-    timeout = setTimeout(function(){ popup.classList.remove("show-action-popup"); }, 500);
+    popup = "<div id='mpp-action-popup'><span class='material-icons'>" + icon + "</span><p>" + string + "</p></div>";
+    container = document.getElementsByClassName("shaka-video-container")[0]
+    try {container.removeChild(document.getElementById("mpp-action-popup"));} catch {};
+    container.insertAdjacentHTML("afterbegin", popup);
 }
-document.addEventListener("visibilitychange", function() {
-    // make sure popup is hidden
-    popup.classList.remove("show-action-popup");
-});
 
-extensionCalled = false;
 document.arrive(".shaka-volume-bar-container", function() {
     if (!loaded) {
         loaded = true;
         console.log("Loaded!");
 
+        // add tooltip to seek bar
+        const seek_tooltip = tippy('.shaka-seek-bar', {
+            followCursor: 'horizontal',
+            arrow: true,
+        });
+
+        function hoverEvent(e) {
+            var seconds = e.target.max;
+            var rect = e.target.getBoundingClientRect();
+            var length = rect.right - rect.left - 12;
+            var x = e.clientX - rect.left - 6; //x position within the element.
+            var pos = ((x)/length) * (seconds);
+            console.log(formatSeconds(pos));
+            console.log(seek_tooltip)
+            seek_tooltip[0].setContent(formatSeconds(pos));
+        }
+
+        //attach to slider and fire on mousemove
+        document.getElementsByClassName('shaka-seek-bar')[0].addEventListener('mousemove', hoverEvent);
+
         vid = document.getElementById("video");
         vid.addEventListener('play', function() {
             vid.playbackRate = intended_speed; // make sure playback speed is still correct
             document.getElementById("mpp-play").innerHTML = "pause" // update play icon
-            if(!extensionCalled){
-                vid.pause()
-            }
         });
         vid.addEventListener('pause', function() {
             document.getElementById("mpp-play").innerHTML = "play_arrow" // update play icon
@@ -66,13 +82,8 @@ document.arrive(".shaka-volume-bar-container", function() {
         console.log(video_data)
         vid.volume = settings.volume;
 
-        // action info popup
-        action_popup = "<div id='mpp-action-popup'></div>";
-        document.getElementsByClassName("shaka-video-container")[0].insertAdjacentHTML("afterbegin", action_popup);
-        popup = document.getElementById("mpp-action-popup");
-
         // download button
-        download_button = "<button class='material-icons' id='mpp-download' aria-label='Download' title='Download'>get_app</button>"
+        download_button = "<button class='material-icons' id='mpp-download' aria-label='Download' data-tippy-content='Download'>get_app</button>"
         vol_slider.insertAdjacentHTML("afterend", download_button);
 
         // TODO: Add in ability for user to click up arrow to download the desired resolution?
@@ -89,7 +100,7 @@ document.arrive(".shaka-volume-bar-container", function() {
         });
 
         // snapshot button
-        screenshot_button = "<button class='material-icons' id='mpp-screenshot' aria-label='Screenshot' title='Take Screenshot'>wallpaper</button>"
+        screenshot_button = "<button class='material-icons' id='mpp-screenshot' aria-label='Screenshot' data-tippy-content='Screenshot'>wallpaper</button>"
         vol_slider.insertAdjacentHTML("afterend", screenshot_button);
         document.getElementById("mpp-screenshot").addEventListener('click', function() {
             var canvas = document.createElement('canvas');
@@ -108,11 +119,10 @@ document.arrive(".shaka-volume-bar-container", function() {
         })
 
         // play/pause button
-        play_button = "<button class='material-icons' id='mpp-play' aria-label='Play/Pause' title='Play/Pause'>play_arrow</button>";
+        play_button = "<button class='material-icons' id='mpp-play' aria-label='Play/Pause' data-tippy-content='Play/Pause [K]'>play_arrow</button>";
         document.getElementsByClassName("shaka-current-time")[0].insertAdjacentHTML("beforebegin", play_button);
         document.getElementById("mpp-play").addEventListener('click', function() {
             if (vid.paused) {
-                extensionCalled = true;
                 vid.play();
             } else {
                 vid.pause();
@@ -120,7 +130,7 @@ document.arrive(".shaka-volume-bar-container", function() {
         });
 
         // volume button
-        volume_button = "<button class='material-icons' id='mpp-volume' aria-label='Toggle Sound' title='Toggle Sound'>volume_up</button>"
+        volume_button = "<button class='material-icons' id='mpp-volume' aria-label='Toggle Sound' data-tippy-content='Mute [M]'>volume_up</button>"
         document.getElementsByClassName("shaka-volume-bar-container")[0].insertAdjacentHTML("beforebegin", volume_button);
         volume_button = document.getElementById("mpp-volume");
         document.getElementById("mpp-volume").addEventListener('click', function() {
@@ -139,6 +149,9 @@ document.arrive(".shaka-volume-bar-container", function() {
                 volume_button.innerHTML = "volume_up"
             }
         });
+        tippy('.shaka-fullscreen-button', {content: 'Fullscreen [F]',});
+        tippy('.shaka-overflow-menu-button', {content: 'More',});
+        tippy('[data-tippy-content]');
     }
 });
 

@@ -34,7 +34,7 @@
     "content_scripts": [
       {
         "matches": ["*://mediaplayer.auckland.ac.nz/*"],
-        "js": ["arrive.min.js", "utils.js", "watchParty/watchParty.js", "plus.js"],
+        "js": ["static/lib/arrive.min.js", "static/lib/popper.min.js", "static/lib/tippy.min.js", "utils.js", "watchParty/watchParty.js", "plus.js"],
         "css" : ["plus.css"]
       },
       {
