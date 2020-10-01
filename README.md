@@ -34,7 +34,7 @@ _If for some reason you cannot install it using the button above, you can instal
 
 **[💬 Discord:](https://discord.gg/sJbs6hu)** You are welcome to [join us on Discord](https://discord.gg/sJbs6hu)! This is the place where you can reach out with any problems, questions, or suggestions, that you may have around this plugin.
 
-**[🌌 Matrix:](https://matrix.to/#/!GVrLieYtoagUolQHhN:matrix.org)** We have a [Matrix room](https://matrix.to/#/!GVrLieYtoagUolQHhN:matrix.org) for those who want an open alternative to Discord. You're welcome to join there as well, although note it isn't bridged with Discord at the moment.
+**[🌌 Matrix:](https://matrix.to/#/!GVrLieYtoagUolQHhN:matrix.org)** We have a [Matrix room](https://matrix.to/#/!GVrLieYtoagUolQHhN:matrix.org) for those who want an open alternative to Discord. It is currently bridged with #general on Discord.
 
 **[🔵 Chrome Web Store:](https://chrome.google.com/webstore/detail/uoa-mediaplayerplus/oohpedaigajmdamiaboobdjijopldlkd/support)** If you have any suggestions or problems, you can also easily [report them on the store page](https://chrome.google.com/webstore/detail/uoa-mediaplayerplus/oohpedaigajmdamiaboobdjijopldlkd/support).
 
