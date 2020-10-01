@@ -18,7 +18,7 @@ Various improvements to the University of Auckland lecture videoplayer (mediapla
 
 ## Download
 
-### Chrome/Chromium/Edge/Brave
+### Chrome/Chromium/Edge/Brave/Vivaldi
 Available on the [Chrome Web Store](https://chrome.google.com/webstore/detail/uoa-mediaplayerplus/oohpedaigajmdamiaboobdjijopldlkd).
 
 [![Chrome Web Store Badge](https://github.com/acoollevel/uoa-mediaplayer-plus/raw/master/assets/chrome-web-store-badge.png "Get from the Chrome Web Store")](https://chrome.google.com/webstore/detail/uoa-mediaplayerplus/oohpedaigajmdamiaboobdjijopldlkd)
