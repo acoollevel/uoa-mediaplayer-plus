@@ -34,8 +34,16 @@
     "content_scripts": [
       {
         "matches": ["*://mediaplayer.auckland.ac.nz/*"],
-        "js": ["static/lib/arrive.min.js", "static/lib/popper.min.js", "static/lib/tippy.min.js", "utils.js", "watchParty/watchParty.js", "plus.js"],
-        "css" : ["plus.css"]
+        "all_frames": true,
+        "js": [
+          "static/lib/arrive.min.js",
+          "static/lib/popper.min.js",
+          "static/lib/tippy.min.js",
+          "utils.js",
+          "watchParty/watchParty.js",
+          "mediaplayer/plus.js"
+        ],
+        "css" : ["mediaplayer/plus.css"]
       },
       {
         "matches": ["*://mediastore.auckland.ac.nz/*"],

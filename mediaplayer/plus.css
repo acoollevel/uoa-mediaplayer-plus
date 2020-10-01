@@ -10,6 +10,11 @@
     height: 100vh;
 }
 
+iframe {
+    border: none;
+    margin-top: 2px;
+}
+
 /* Hide massive centre playbutton */
 .shaka-play-button-container {
     display: none!important;
@@ -95,6 +100,21 @@
 
   .shaka-range-element:hover {
     cursor: pointer!important;
+  }
+
+  iframe[name="mpp-seek-video"]  {
+      position: absolute;
+      opacity: 0;
+  }
+
+  #mpp-seek-preview {
+      width: 200px;
+      display: block;
+      transition: height 2s;
+  }
+
+  .tippy-content {
+      text-align: center;
   }
 
   /* Tooltip material theme */

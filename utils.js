@@ -8,13 +8,10 @@ function downloadURI(uri, name) {
     delete link;
 }
 
-function setDefaultResolution(){
-    console.log("Called set resolution");
+function setResolution(res) {
     resolutionButtons = document.getElementsByClassName("explicit-resolution");
-    console.log("Should have the buttons?");
-    console.log(resolutionButtons)
     for(const resButton of resolutionButtons){
-        if(resButton.firstChild.innerText == settings.defaultPlaybackResolution){
+        if(resButton.firstChild.innerText == res){
             resButton.click();
             console.log("Should have set default resolution to: " + settings.defaultPlaybackResolution);
             break;
