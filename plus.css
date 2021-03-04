@@ -130,6 +130,7 @@
     background: #ffffff;
     cursor: pointer;
     box-shadow: -2px 3px 10px #c0c0c0;
+    border: none;
 }
 
 #mpp-playback-speed-slider::-webkit-slider-thumb {
@@ -141,4 +142,5 @@
     background-color: #ffffff;
     cursor: pointer;
     box-shadow: -2px 3px 10px #c0c0c0;
+    border: none;
 }
