@@ -107,8 +107,38 @@ document.arrive(".shaka-volume-bar-container", function() {
         speed_changer.addEventListener('click', function() {
             intended_speed = vid.playbackRate;
         })
+        
+        
+        // Get rid of old controls
+        speed_changer.innerHTML = ""
+        // HTML for new controls
+        let new_speed_controls = `
+        <button class="shaka-back-to-overflow-button" aria-label="Back">
+            <i class="material-icons">arrow_back</i>
+            <span>Playback speed</span>
+        </button>
+        <div class="mpp-playback-speed-container">
+            <span id="mpp-playback-speed-display">1.00</span>
+            <input id="mpp-playback-speed-slider" type="range" min="0.05" max="3" step="0.05" value="1.00"/>
+        </div>`
+        // Insert the new controls
+        speed_changer.insertAdjacentHTML('beforeend', new_speed_controls)
 
-        // play/pause button
+        // Add event for speed changing
+        let speed_slider = document.getElementById("mpp-playback-speed-slider")
+        speed_slider.addEventListener('input', function(event) {
+            let speed = event.target.value.toString()
+            vid.playbackRate = speed
+            intended_speed = speed
+            
+            let speed_display = document.getElementById("mpp-playback-speed-display")
+            speed_display.innerHTML = parseFloat(event.target.value).toFixed(2) // to 2 dp
+        })
+
+        //remove old play/pause button (otherwise we have duplicates)
+        document.getElementsByClassName("shaka-small-play-button").item(0).remove()
+
+        // new play/pause button
         play_button = "<button class='material-icons' id='mpp-play' aria-label='Play/Pause' title='Play/Pause'>play_arrow</button>";
         document.getElementsByClassName("shaka-current-time")[0].insertAdjacentHTML("beforebegin", play_button);
         document.getElementById("mpp-play").addEventListener('click', function() {
