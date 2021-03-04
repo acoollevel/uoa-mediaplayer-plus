@@ -119,7 +119,7 @@ document.arrive(".shaka-volume-bar-container", function() {
         </button>
         <div class="mpp-playback-speed-container">
             <span id="mpp-playback-speed-display">1.00</span>
-            <input id="mpp-playback-speed-slider" type="range" min="0.05" max="3" step="0.05" value="1.00"/>
+            <input id="mpp-playback-speed-slider" type="range" min="0.10" max="3" step="0.05" value="1.00"/>
         </div>`
         // Insert the new controls
         speed_changer.insertAdjacentHTML('beforeend', new_speed_controls)
