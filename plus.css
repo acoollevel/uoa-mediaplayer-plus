@@ -73,3 +73,74 @@
     top: -7px;
     font-family: Roboto-Regular,Roboto,sans-serif;
 }
+
+.mpp-playback-speed-container {
+    display: flex;
+    align-items: center;
+    margin: 5px 10px;
+}
+
+
+.mpp-playback-speed-container span, input {
+    font-family: Roboto-Regular,Roboto,sans-serif;
+    font-size: 14px;
+    color: black;
+}
+
+#mpp-playback-speed-display {
+    margin-left: 2.5px; /* Explicit so we override another rule */
+    margin-right: 13px;
+    margin-bottom: 1px; 
+    letter-spacing: 1px;
+    width: 36px;
+}
+
+#mpp-playback-speed-slider {
+    -webkit-appearance: none;
+    margin: 0px 0;
+}
+
+#mpp-playback-speed-slider::-moz-range-track {
+    width: 100%;
+    height: 6px;
+    cursor: pointer;
+    background: #d3d3d3;
+    border-radius: 5px;
+}
+
+#mpp-playback-speed-slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    cursor: pointer;
+    background: #d3d3d3;
+    border-radius: 5px;
+}
+
+/* Unfortuantely webkit doesn't have a progress bar feature so sucks for chrome users */
+#mpp-playback-speed-slider::-moz-range-progress {
+    background-color: #a0a0a0a0;
+    height: 6px;
+    border-radius: 5px;
+}
+
+#mpp-playback-speed-slider::-moz-range-thumb {
+    height: 12px;
+    width: 12px;
+    border-radius: 100%;
+    background: #ffffff;
+    cursor: pointer;
+    box-shadow: -2px 3px 10px #c0c0c0;
+    border: none;
+}
+
+#mpp-playback-speed-slider::-webkit-slider-thumb {
+    appearance: none;
+    margin-top: -3px; /* Fix weird vertical alignment issue in chrome */
+    height: 12px;
+    width: 12px;
+    border-radius: 100%;
+    background-color: #ffffff;
+    cursor: pointer;
+    box-shadow: -2px 3px 10px #c0c0c0;
+    border: none;
+}

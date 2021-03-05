@@ -11,11 +11,14 @@ var settings = {
 // declare default values for video data
 var video_data = {
     position: 42, // default start position, skips copyright message
+    playback_speed: 1.0, // ldefault video speed
 }
 
 // get unique video id
 var video_id = window.location.href.replace(".preview", "").replace("https://mediaplayer.auckland.ac.nz", "");
 
+//firefox compat
+var chrome = chrome || browser;
 // load video data from local storage
 chrome.storage.sync.get([video_id, "settings"], function(result) {
     console.log(result);
@@ -68,12 +71,24 @@ document.arrive(".shaka-volume-bar-container", function() {
                 settings.volume = 0;
             }
         });
+        vid.addEventListener("ratechange", function() {
+            // keep intended speed
+            intended_speed = vid.playbackRate
+            video_data.playback_speed = vid.playbackRate
+            // update visual elements and slider
+            speed_display.innerHTML = parseFloat(vid.playbackRate).toFixed(2)
+            speed_slider.value = vid.playbackRate
+        });
         controls = document.getElementsByClassName("shaka-controls-container")[0]
         vol_slider = document.getElementsByClassName("shaka-volume-bar-container")[0]
 
         // apply settings
         vid.currentTime = video_data.position;
         vid.volume = settings.volume;
+
+        // per video speed settings 
+        intended_speed = video_data.playback_speed
+        vid.playbackRate = video_data.playback_speed
 
         // action info popup
         action_popup = "<div id='mpp-action-popup'></div>";
@@ -107,8 +122,38 @@ document.arrive(".shaka-volume-bar-container", function() {
         speed_changer.addEventListener('click', function() {
             intended_speed = vid.playbackRate;
         })
+        
+        
+        // Get rid of old controls
+        speed_changer.innerHTML = ""
+        // HTML for new controls
+        let new_speed_controls = `
+        <button class="shaka-back-to-overflow-button" aria-label="Back">
+            <i class="material-icons">arrow_back</i>
+            <span>Playback speed</span>
+        </button>
+        <div class="mpp-playback-speed-container">
+            <span id="mpp-playback-speed-display">${parseFloat(vid.playbackRate).toFixed(2)}</span>
+            <input id="mpp-playback-speed-slider" type="range" min="0.10" max="3" step="0.05" value="${vid.playbackRate}"/>
+        </div>`
+        // Insert the new controls
+        speed_changer.insertAdjacentHTML('beforeend', new_speed_controls)
 
-        // play/pause button
+        // Add event for speed changing
+        var speed_display = document.getElementById("mpp-playback-speed-display")
+        var speed_slider = document.getElementById("mpp-playback-speed-slider")
+        speed_slider.addEventListener('input', function(event) {
+            let speed = event.target.value.toString()
+            vid.playbackRate = event.target.value
+            intended_speed = event.target.value
+            // we update settings and displays inside
+            // the ratechange event callback 
+        })
+
+        //remove old play/pause button (otherwise we have duplicates)
+        document.getElementsByClassName("shaka-small-play-button").item(0).remove()
+
+        // new play/pause button
         play_button = "<button class='material-icons' id='mpp-play' aria-label='Play/Pause' title='Play/Pause'>play_arrow</button>";
         document.getElementsByClassName("shaka-current-time")[0].insertAdjacentHTML("beforebegin", play_button);
         document.getElementById("mpp-play").addEventListener('click', function() {
@@ -208,7 +253,7 @@ document.addEventListener('keydown', function(event) {
             vid.playbackRate = 3;
         }
         intended_speed = vid.playbackRate;
-        show_popup("fast_forward", vid.playbackRate + "x");
+        show_popup("fast_forward", vid.playbackRate.toFixed(2) + "x");
     }
 
     // Decrease speed with ','
@@ -218,13 +263,14 @@ document.addEventListener('keydown', function(event) {
             vid.playbackRate = 0.25;
         }
         intended_speed = vid.playbackRate;
-        show_popup("fast_rewind", vid.playbackRate + "x");
+        show_popup("fast_rewind", vid.playbackRate.toFixed(2) + "x");
     }
 
     // Reset speed with '/'
     if(event.keyCode == 191) {
         vid.playbackRate = 1;
         intended_speed = vid.playbackRate;
+
         show_popup("speed", "1x");
     }
 
