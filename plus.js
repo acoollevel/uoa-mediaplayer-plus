@@ -11,7 +11,7 @@ var settings = {
 // declare default values for video data
 var video_data = {
     position: 42, // default start position, skips copyright message
-    playback_speed: 1.0,
+    playback_speed: 1.0, // ldefault video speed
 }
 
 // get unique video id
@@ -72,6 +72,8 @@ document.arrive(".shaka-volume-bar-container", function() {
             }
         });
         vid.addEventListener("ratechange", function() {
+            // keep intended speed
+            intended_speed = vid.playbackRate
             video_data.playback_speed = vid.playbackRate
             // update visual elements and slider
             speed_display.innerHTML = parseFloat(vid.playbackRate).toFixed(2)
@@ -83,6 +85,9 @@ document.arrive(".shaka-volume-bar-container", function() {
         // apply settings
         vid.currentTime = video_data.position;
         vid.volume = settings.volume;
+
+        // per video speed settings 
+        intended_speed = video_data.playback_speed
         vid.playbackRate = video_data.playback_speed
 
         // action info popup
@@ -128,8 +133,8 @@ document.arrive(".shaka-volume-bar-container", function() {
             <span>Playback speed</span>
         </button>
         <div class="mpp-playback-speed-container">
-            <span id="mpp-playback-speed-display">1.00</span>
-            <input id="mpp-playback-speed-slider" type="range" min="0.10" max="3" step="0.05" value="1.00"/>
+            <span id="mpp-playback-speed-display">${parseFloat(vid.playbackRate).toFixed(2)}</span>
+            <input id="mpp-playback-speed-slider" type="range" min="0.10" max="3" step="0.05" value="${vid.playbackRate}"/>
         </div>`
         // Insert the new controls
         speed_changer.insertAdjacentHTML('beforeend', new_speed_controls)
