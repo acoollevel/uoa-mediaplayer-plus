@@ -16,6 +16,9 @@ var video_data = {
 // get unique video id
 var video_id = window.location.href.replace(".preview", "").replace("https://mediaplayer.auckland.ac.nz", "");
 
+// cross browser storage
+var chrome = chrome || browser; 
+
 // load video data from local storage
 chrome.storage.sync.get([video_id, "settings"], function(result) {
     console.log(result);
